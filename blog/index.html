@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fun times in Ecuador</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="icon" href="pictures/icon.png">
+	<link href='http://fonts.googleapis.com/css?family=Poiret+One|Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+	<script type="text/javascript"> 
+		var ua=navigator.userAgent; 
+		if (ua.indexOf("Mobile")!=-1) window.location = "/mobile.html"; 
+		if (ua.indexOf("iPad")!=-1) window.location = "/mobile.html";
+		if (ua.indexOf("iPhone")!=-1) window.location = "/mobile.html";
+	</script> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+</head>
+<body>
+
+	<div class="title-bar">
+		<h1 class="center">MIS AVENTURAS EN EL ECUADOR</h1>
+	</div>
+
+	<div class="overlay" id="modalOverlay"></div>
+	<div class="modal">
+		<h1 class="close-button" id="post-close"><b>X</b></h1>
+		<div id="post-image">
+			<img src="#">
+		</div>
+		<div class="post-text">
+			<h2 id="post-title"></h2>
+			<h4 id="post-date"></h4>
+			<p id="postContent"></p>
+		</div>
+	</div>
+	<div class="overlay" id="pictureOverlay"></div>
+	<div id="pictureViewer">
+		<img src="#" id="fullScreenPicture">
+		<h1 class="close-button" id="imageViewerClose"><b>X</b></h1>
+	</div>
+	<div class="content">
+	</div>
+
+	<script type="text/javascript">
+		var posts = [];	
+		// Load JSON data
+		$(document).ready(function() {
+			var intro = '<div class="post">\n<figure>\n<img src="',
+					middle = '"></img>\n<figcaption class="unselectable">',
+					end = '</figcaption>\n</figure>\n</div>';
+			$.getJSON("getposts", function(data) {
+				$.each( data, function(key, val) {
+					posts.push(val);
+					$.getJSON("getimage/" + val.id, function(image) {
+					var friendlyImage = ('pictures/' + val.id + '/' + image.name);
+					$('.content').append($(intro + friendlyImage + middle + val.title + end));
+					});
+				});
+			});
+		});
+
+		// Toggle the post modal visibility
+		function toggleModal() {
+			$('.modal').fadeToggle(300); 
+			$('#modalOverlay').fadeToggle(300);
+		};	
+		
+		// Display the modal when clicking a post. Load the data from database.
+		$(document).on('click', '.post', function() {
+			var scrollTop = $(document).scrollTop() + 20;
+			var imageSource = $(this).find('img').attr('src');
+			$('.modal').find('img').attr('src', imageSource);
+			$('.modal').css("top", scrollTop + "px");
+			$('#post-title').text($(this).find('figcaption').text());
+			var postText, postDate;
+			var BreakException= {};
+			try {
+				posts.forEach(function(element, index, arr) {
+					if(element.id.indexOf(imageSource.substring(9,33)) != -1) {
+						$('#postContent').text(element.text);
+						$('#post-date').text(element.date);
+						throw BreakException;
+					}
+				});
+			} catch(e) {
+    		if (e!==BreakException) throw e;
+			}
+			toggleModal();
+		});
+
+		// Close the modal when clicking outside its bounds
+		$('#modalOverlay').click(function() {
+			toggleModal();
+		});
+		
+		// Close the modal when clicking the 'X'
+		$('#post-close').click(function() {
+			toggleModal();
+		});
+
+		// Toggle image viewer visibility
+		function togglePictureViewer() {
+			$('#pictureOverlay').fadeToggle(300);
+      $('#pictureViewer').fadeToggle(300);
+		};
+
+		// Hide image viewer
+		$('#pictureOverlay').click( function() {
+			togglePictureViewer();
+		});	
+
+		// Display image viewer
+		$('#post-image img').click(function() {
+			$('#fullScreenPicture').attr('src', $(this).attr('src'));
+			togglePictureViewer();
+		});
+
+		// Close the image viewer
+		$('#imageViewerClose').click(function() {
+			togglePictureViewer();
+		});
+	</script>
+
+</body>
+</html>

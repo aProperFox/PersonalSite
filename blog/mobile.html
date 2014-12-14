@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fun times in Ecuador</title>
+	<link rel="stylesheet" href="css/mobile.css">
+	<link rel="icon" href="pictures/icon.png">
+	<link href='http://fonts.googleapis.com/css?family=Poiret+One|Oxygen:400,300,700' rel='stylesheet' type='text/css' />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+</head>
+<body>
+
+	<div class="title-bar">
+		<h1 class="center">MIS AVENTURAS EN EL ECUADOR</h1>
+	</div>
+
+	<div class="overlay"></div>
+
+	<div class="content">
+		<div class="post">
+			<figure>
+				<img src="pictures/intro.jpg" alt="Get a beter browser">
+				<figcaption class="unselectable">I'm Tyler! I'm going to be living in Ecuador for some time and it'll be fun and stuff!</figcaption>
+			</figure>
+		</div>
+		<div class="modal">
+			<span class="post-image">
+				<img src="pictures/intro.jpg">
+				<h2 id="post-title">I'm Tyler!</h2>
+			</span>
+			<span class="post-text">
+				<p>Blah blah blah I'm special and stuff<br>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel arcu maximus, fermentum mauris nec, tristique eros. <br>
+				Suspendisse consectetur vehicula felis sed egestas. Donec eleifend sed lacus id tempor. Sed facilisis risus et vulputate auctor. <br>
+				Sed quam velit, semper id eros eget, viverra pretium eros. Interdum et malesuada fames ac ante ipsum primis in faucibus. <br>
+				In fringilla non libero vel sollicitudin. Nam pellentesque lectus eu nibh bibendum, et tincidunt arcu aliquam. <br>
+				Nulla rhoncus metus id diam accumsan ultricies. Suspendisse potenti.<br>
+				<br>
+				<br>
+				Sed lobortis et dolor sit amet euismod. Nulla accumsan ultricies metus. Nunc eu odio vestibulum odio sollicitudin mollis. <br>
+				Integer eleifend quis diam et interdum. Suspendisse potenti. Sed laoreet ullamcorper libero, a fringilla diam fermentum quis. <br>
+				Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi rhoncus sapien cursus lacus luctus pellentesque sit amet aliquet nibh. <br>
+				Donec ultricies, tortor a pharetra semper, mi enim auctor lacus, et ornare lorem urna sed lectus. Sed eget nibh et ipsum commodo hendrerit et ut diam. <br>
+				Nam a rhoncus metus. Nullam placerat pretium quam, vitae interdum tellus rhoncus porttitor. Sed et lorem vel neque sodales luctus ac ac sapien. <br>
+				Pellentesque lobortis dui sit amet mauris aliquam, ut rutrum nulla pharetra. Suspendisse et nunc elit. Mauris tristique nibh vel dui fermentum maximus.
+				</p>
+			</span>
+		</div>
+		<div class="post">
+			<figure>
+				<img src="pictures/post2.jpg" alt="Get a beter browser">
+				<figcaption class="unselectable">Lookie!</figcaption>
+			</figure>
+		</div>
+		<div class="post">
+			<figure>
+				<img src="pictures/llama.jpg" alt="Get a beter browser">
+				<figcaption class="unselectable">What now?</figcaption>
+			</figure>
+		</div>
+		<div class="post">
+			<figure>
+				<img src="pictures/hat.jpg" alt="Get a beter browser">
+				<figcaption class="unselectable">Wowzas!</figcaption>
+			</figure>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function toggleModal() {
+			$('.modal').fadeToggle(300); 
+			$('.overlay').fadeToggle(300);
+		};	
+		$('.post').click(function() {
+			var imageSource = $(this).find('img').attr('src');
+			$('.modal').find('img').attr('src', imageSource);
+			$('#post-title').text($(this).find('figcaption').text());
+			toggleModal();
+		});
+
+		$('.overlay').click(function() {
+			toggleModal();
+		});
+	</script>
+
+</body>
+</html>
