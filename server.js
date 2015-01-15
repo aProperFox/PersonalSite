@@ -12,13 +12,31 @@ var server = express();
 server.use(bodyParser());
 server.use(methodOverride());
 server.use(express.static(__dirname + '/blog'));
-//server.use(errorHandler({ dumpExceptions: true, showStack: true}));
+
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
+};
+server.use(allowCrossDomain);
 
 server.get('/api', function (req, res, next) {
 	res.send('Our sample API is up...');
 });
 
 server.get('/getposts', function (req, res, next) {
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 	db.posts.find({}, function(err, posts) { // Query in MongoDB via Mongo JS Module
 		if( err || !posts) {
 			console.log("No posts found");
@@ -34,7 +52,6 @@ server.get('/getposts', function (req, res, next) {
 					'"},' + '\n';
 			});
 			str = str.trim();
-			str = str.trim();
 			str = str.substring(0, str.length-1);
 			str = str + ']';
 			res.end( str );
@@ -43,36 +60,22 @@ server.get('/getposts', function (req, res, next) {
 	});
 });
 
-server.get('/getimage/:dir', function (req, res, next) {
+server.get('/getimages/:dir', function (req, res, next) {
 	res.writeHead(200, {'Content-Type': 'application/json'}); // Sending data via json
-	fs.readdir("blog/pictures/" + req.params.dir, function (err, files) {
+	fs.readdir("./blog/pictures/" + req.params.dir, function (err, files) {
  	 if (err) throw err;
-		res.end('{ "name": "' + files[0] + '"}');
+		str = '[';
+		files.forEach(function(element, index, arr) {
+			str += '{ "name": "' + element + '"},\n'
+		});
+		str = str.trim();
+		str = str.substring(0, str.length-1);
+		str += ']';
+		res.end(str);
 	});
-});
-
-server.post('/insertpost', function (req, res, next) {
-	console.log("POST: ");
-	res.header("Access-Control-Allow-Origin", "http://localhost");
-	res.header("Access-Control-Allow-Methods", "GET, POST");
-	// The above 2 lines are required for Cross Domain Communication(Allowing the methods that come as
-	// Cross Domain Request
-	console.log(req.body);
-	var jsonData = JSON.parse(req.body);
-
-	db.posts.save({title: jsonData.title, date: jsonData.date, text: jsonData.text},
-		function(err, saved) {
-			if( err || !saved ) {
-				res.end( "User not saved");
-			} else {
-				res.end( "User saved" );
-			}
-		}
-	);
 });
 
 var port = 2015;
 server.listen(port, function() {
 	console.log('server listening on port ' + port);
 });
-

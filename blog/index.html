@@ -37,12 +37,18 @@
 	<div id="pictureViewer">
 		<img src="#" id="fullScreenPicture">
 		<h1 class="close-button" id="imageViewerClose"><b>X</b></h1>
+		<div id="leftPictureArea"></div>
+		<div id="rightPictureArea"></div>
 	</div>
-	<div class="content">
+	<div class="content round">
 	</div>
 
 	<script type="text/javascript">
 		var posts = [];	
+		var imageHash = new Object();
+		var currentPostId = '';
+		var currentImageArray = [];
+
 		// Load JSON data
 		$(document).ready(function() {
 			var intro = '<div class="post">\n<figure>\n<img src="',
@@ -51,9 +57,14 @@
 			$.getJSON("getposts", function(data) {
 				$.each( data, function(key, val) {
 					posts.push(val);
-					$.getJSON("getimage/" + val.id, function(image) {
-					var friendlyImage = ('pictures/' + val.id + '/' + image.name);
-					$('.content').append($(intro + friendlyImage + middle + val.title + end));
+					$.getJSON("getimages/" + val.id, function(images) {
+						var friendlyImage = ('pictures/' + val.id + '/' + images[0].name);
+						$('.content').append($(intro + friendlyImage + middle + val.title + end));
+						var imagesString = [];
+						images.forEach(function(element, index, arr) {
+							imagesString.push(element.name);
+						});
+						imageHash[val.id] = imagesString;
 					});
 				});
 			});
@@ -77,8 +88,10 @@
 			try {
 				posts.forEach(function(element, index, arr) {
 					if(element.id.indexOf(imageSource.substring(9,33)) != -1) {
-						$('#postContent').text(element.text);
+						$('#postContent').empty().append($.parseHTML(element.text));
 						$('#post-date').text(element.date);
+						currentPostId = element.id;
+						currentImageArray = imageHash[element.id];
 						throw BreakException;
 					}
 				});
@@ -119,6 +132,51 @@
 		$('#imageViewerClose').click(function() {
 			togglePictureViewer();
 		});
+
+		// Change image
+		function switchImage(isPositive) {
+			var nextImage = "pictures/" + currentPostId + "/";
+			var $fspic = $('#fullScreenPicture');
+			var arrLength = currentImageArray.length;
+			if(isPositive) {
+				nextImage += currentImageArray[($.inArray($fspic.attr('src').substring($fspic.attr('src').lastIndexOf('/') + 1), currentImageArray) + 1) % arrLength];
+			} else {
+				nextImage += currentImageArray[($.inArray($fspic.attr('src').substring($fspic.attr('src').lastIndexOf('/') + 1), currentImageArray) - 1 + arrLength) % arrLength];
+			}
+			if(currentImageArray.length > 1) {
+       	$fspic.attr('src', nextImage);
+			}
+		}
+
+		// Next image
+		$('#rightPictureArea').click(function() {
+			switchImage(true);
+		});
+
+		// Previous image
+		$('#leftPictureArea').click(function() {
+			switchImage(false);
+		});
+
+		$(document).keydown(function( event ) {
+			if($('#pictureViewer').is(":visible")) {
+				if(event.which == 37) {
+					switchImage(false);
+				} else if(event.which == 39) {
+					switchImage(true);
+				} else if(event.which == 27) {
+					togglePictureViewer();
+				}
+			} else if($('.modal').is(":visible")) {
+				if(event.which == 27) {
+					toggleModal();
+				}
+
+			}
+		});
+
+		
+
 	</script>
 
 </body>

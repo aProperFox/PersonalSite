@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link href="./css/styles.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Poiret+One|Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+
+
+<script src="js/jquery.form.js"></script>
+<script src="js/upload.js"></script>
+<title>Tyler's Blog Poster</title>
+</head>
+<body>
+<div class="main">
+	<h1>Welcome to Tyler's super secret blog poster!</h1>
+	<form >
+ 		Title<br/>
+		<input type='text' name='title' id='title' size="40"/><br />
+ 		Text<br />
+ 		<textarea name='text' id='text' rows="20" cols="60"></textarea><br />
+		<p id="postResultMessage"></p>
+  	<button type='button' id="submitButton">Submit</button>
+	</form>
+</div>
+
+<div id="uploadModal">
+	
+	<h2 id="closeUploadModal" class="close-button">X</h2>
+	<form id="uploadForm"
+  	enctype="multipart/form-data"
+    action="/upload"
+    method="post">
+ 		<input type="file" id="userPhotoInput" name="userPhoto" multiple/>
+  </form>
+ 
+  <span id="status" />
+	<img id="uploadedImage" />
+
+</div>
+
+<div id="alertModal">
+	<h2>Did you fill out all fields?</h2>
+	<input type='button' value='OK' id="closeModal">
+</div>
+
+<div class="overlay"></div>
+
+<script>
+
+var folderUrl;
+
+function toggleAlertModal() {
+	$('#alertModal').fadeToggle(300);
+	$('.overlay').fadeToggle(300);
+}
+
+$('#closeModal').click(function() {
+	toggleAlertModal();
+});
+
+$('#submitButton').click(function() {
+	var title, text, postText, postData;
+	title = $('#title').val();
+	text = $('#text').val().replace(/\n/g, "<br />");;
+	if(title == '' || text == '' || title == null || text == null) {
+		toggleAlertModal();
+		return;
+	}
+	postText = '{"title": "' + title + '", "text": "' + text + '"}';
+	postData = JSON.parse(postText);
+
+
+	$.post( "insertpost", postData, function(successData) {
+		$('#postResultMessage')
+			.css('color', 'green')
+			.text("Post successfully added to database")
+			.fadeIn(300);
+		console.log(successData);
+
+		folderUrl = 'upload/' + successData;
+		$('#uploadForm').attr('action', folderUrl);
+		toggleUploadModal();
+	})
+	.fail(function() {
+		$('#postResultMessage')
+			.css('color', 'red')
+			.text("AN ERROR OCCURRED")
+			.fadeIn(300);
+  });
+});
+
+function toggleUploadModal() {
+	$('#uploadModal').fadeToggle(300);
+	$('.overlay').fadeToggle(300);
+}
+
+$('#closeUploadModal').on('click', function() {
+	toggleUploadModal();
+});
+
+</script>
+
+</body>
+
+</html>

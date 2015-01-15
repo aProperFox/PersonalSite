@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link href="./css/styles.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Poiret+One|Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+
+
+<script src="js/jquery.form.js"></script>
+<script src="js/upload.js"></script>
+<title>Tyler's Blog Poster</title>
+</head>
+<body>
+<div class="main">
+	<h1>Choose which post to update:</h1>
+	<button id="updateButton">Select</button>
+	<form >
+ 		Title<br/>
+		<input type='text' name='title' id='title' size="40"/><br />
+ 		Text<br />
+ 		<textarea name='text' id='text' rows="20" cols="60"></textarea><br />
+		<p id="postResultMessage"></p>
+  	<button type='button' id="submitButton">Submit</button>
+	</form>
+</div>
+
+<div id="alertModal">
+	<h2>Did you fill out all fields?</h2>
+	<input type='button' value='OK' id="closeModal">
+</div>
+
+<div class="overlay"></div>
+
+<div id="blogData" class="hidden">
+
+	<div class="content round">
+	</div>
+
+</div>
+
+<script>
+
+var postId;
+
+function toggleAlertModal() {
+	$('#alertModal').fadeToggle(300);
+	$('.overlay').fadeToggle(300);
+}
+
+$('#closeModal').click(function() {
+	toggleAlertModal();
+});
+
+$('#submitButton').click(function() {
+	var title, text, postText, postData;
+	title = $('#title').val();
+	text = $('#text').val().replace(/\n/g, "<br />");;
+	if(title == '' || text == '' || title == null || text == null) {
+		toggleAlertModal();
+		return;
+	}
+	postText = '{"title": "' + title + '", "text": "' + text + '"}';
+	postData = JSON.parse(postText);
+
+
+	$.post( "update/" + postId, postData, function(successData) {
+		$('#postResultMessage')
+			.css('color', 'green')
+			.text("Post successfully added to database")
+			.fadeIn(300);
+		console.log(successData);
+	})
+	.fail(function() {
+		$('#postResultMessage')
+			.css('color', 'red')
+			.text("AN ERROR OCCURRED")
+			.fadeIn(300);
+  });
+});
+
+$('#updateButton').click(function() {
+		toggleBlogModal();
+});
+
+function toggleBlogModal() {
+	$('#blogData').fadeToggle(300);
+	$('.overlay').fadeToggle(300);
+};
+
+//--------------BLOG LOAD FUNCTIONS--------------\\
+
+	var posts = [];	
+
+	var url = "http://tylerolson.us:2015/";
+
+	// Load JSON data
+	$(document).ready(function() {
+		var intro = '<div class="post">\n<figure>\n<img src="../blog/',
+				middle = '"></img>\n<figcaption class="unselectable">',
+				end = '</figcaption>\n</figure>\n</div>';
+		$.getJSON(url + "getposts", function(data) {
+			$.each( data, function(key, val) {
+				posts.push(val);
+				$.getJSON(url + "getimages/" + val.id, function(images) {
+					var friendlyImage = ('pictures/' + val.id + '/' + images[0].name);
+					$('.content').append($(intro + friendlyImage + middle + val.title + end));
+				});
+			});
+		});
+	});
+	// Toggle the post modal visibility
+	function toggleModal() {
+		$('.modal').fadeToggle(300); 
+		$('#modalOverlay').fadeToggle(300);
+	};	
+	
+	// Display the modal when clicking a post. Load the data from database.
+	$(document).on('click', '.post', function() {
+		var imageSource = $(this).find('img').attr('src');
+		var BreakException= {};
+		try {
+			posts.forEach(function(element, index, arr) {
+				if(element.id.indexOf(imageSource.substring(17,41)) != -1) {
+					var text = '';
+					text = element.text.replace(/\<br\s\/\>/g, '\n');
+					$('#text').val(text);
+					$('#title').val(element.title);
+					postId = element.id;
+					throw BreakException;
+				}
+			});
+		} catch(e) {
+   		if (e!==BreakException) throw e;
+		}
+		toggleBlogModal();
+	});
+	// Close the modal when clicking outside its bounds
+	$('#modalOverlay').click(function() {
+		toggleModal();
+	});
+	
+	// Close the modal when clicking the 'X'
+	$('#post-close').click(function() {
+		toggleModal();
+	});
+
+</script>
+
+</body>
+
+</html>
