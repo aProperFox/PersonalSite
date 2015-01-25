@@ -14,6 +14,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	<script src="js/preloadjs-0.6.0.min.js"></script>
 </head>
 <body>
 
@@ -35,7 +36,6 @@
 	</div>
 	<div class="overlay" id="pictureOverlay"></div>
 	<div id="pictureViewer">
-		<img src="#" id="fullScreenPicture">
 		<h1 class="close-button" id="imageViewerClose"><b>X</b></h1>
 		<div id="leftPictureArea"></div>
 		<div id="rightPictureArea"></div>
@@ -48,6 +48,7 @@
 		var imageHash = new Object();
 		var currentPostId = '';
 		var currentImageArray = [];
+		var isFirstImage = true;
 
 		// Load JSON data
 		$(document).ready(function() {
@@ -99,6 +100,8 @@
     		if (e!==BreakException) throw e;
 			}
 			toggleModal();
+			isFirstImage = true;
+			loadImages(currentPostId);
 		});
 
 		// Close the modal when clicking outside its bounds
@@ -135,16 +138,28 @@
 
 		// Change image
 		function switchImage(isPositive) {
-			var nextImage = "pictures/" + currentPostId + "/";
-			var $fspic = $('#fullScreenPicture');
-			var arrLength = currentImageArray.length;
+			var $fspic = $('img.currentImage');
 			if(isPositive) {
-				nextImage += currentImageArray[($.inArray($fspic.attr('src').substring($fspic.attr('src').lastIndexOf('/') + 1), currentImageArray) + 1) % arrLength];
+				console.log("siblings: " + ($fspic.siblings(":last").attr('src')));
+				$fspic.fadeOut(300);
+				if($fspic.next().attr('class') == undefined) {
+					$fspic.siblings().first()
+						.fadeIn(300)
+						.addClass('currentImage').end()
+					.removeClass('currentImage');
+				} else {
+					$fspic.next()
+						.fadeIn(300)
+						.addClass('currentImage').end()
+					.removeClass('currentImage');
+				}
 			} else {
-				nextImage += currentImageArray[($.inArray($fspic.attr('src').substring($fspic.attr('src').lastIndexOf('/') + 1), currentImageArray) - 1 + arrLength) % arrLength];
-			}
-			if(currentImageArray.length > 1) {
-       	$fspic.attr('src', nextImage);
+				console.log("siblings: " + ($fspic.siblings(":last").attr('src')));
+				$fspic.fadeOut(300)
+				.prev()
+					.fadeIn(300)
+					.addClass('currentImage').end()
+				.removeClass('currentImage');
 			}
 		}
 
@@ -175,7 +190,30 @@
 			}
 		});
 
-		
+		function loadImages(folder) {
+  		var preload = new createjs.LoadQueue();
+ 	 		preload.addEventListener("fileload", handleFileComplete);
+			for (var i = 0; i < currentImageArray.length; i++) {
+				var imageString = "pictures/" + folder + "/" + currentImageArray[i];
+	  		preload.loadFile({
+					src:imageString
+				});
+			}
+		}
+
+		function handleFileComplete(event) {
+			var item = event.result;
+			var jitem = $(item);
+			jitem.addClass("full-screen-picture").attr('alt', "pictures/loader.gif");
+			if(isFirstImage) {
+				jitem.addClass("currentImage");
+				isFirstImage = false;
+			} else {
+				jitem.css('display', 'none');
+			}
+			jitem.prependTo('#pictureViewer');
+			console.log("file " + jitem.attr('src')  + "  loaded");
+		}
 
 	</script>
 
