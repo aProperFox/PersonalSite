@@ -8,6 +8,7 @@ var busboy = require('connect-busboy'); //middleware for form/file upload
 var path = require('path');     //used for file path
 var fs = require('fs-extra');       //File System - for file manipulation
 var ObjectID = require('mongodb').ObjectID;
+var rmdir = require('rimraf');
 
 //app.use(express.static(__dirname + '/admin'));
 app.use(bodyParser());
@@ -129,6 +130,46 @@ app.post('/update/:id', function(req, res, next) {
 				console.log("No errors occurred");
 				res.status(200).send();
 			}
+		}
+	);
+
+});
+
+app.del('/delete/:id', function(req, res, next) {
+
+  console.log("Deleting post with id: " + req.params.id);
+  var jsonData = req.body;
+
+	var altTitle, altText, altDate;
+
+	db.posts.remove({_id: ObjectID(req.params.id)}, function(err, data) {
+		if(err) {
+			console.log(err);
+			next();
+		}
+		console.log(data);
+	});
+
+	db.posts.remove({_id: ObjectID(req.params.id)},
+		function(err) {
+			if(err) {
+				console.log( err );
+				res.status(400).send();
+				next();
+			} else {
+
+				var path = __dirname + '/blog/pictures/' + req.params.id;
+				console.log("Deleting contents in path: " + path);
+				rmdir(path, function(error) {
+					if(error) {
+						console.log(err);
+						res.status(400).send();
+					}
+				});
+
+				console.log("Post was successfully deleted!");
+				res.status(200).send();	
+			} 
 		}
 	);
 

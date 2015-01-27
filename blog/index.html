@@ -39,6 +39,11 @@
 		<h1 class="close-button" id="imageViewerClose"><b>X</b></h1>
 		<div id="leftPictureArea"></div>
 		<div id="rightPictureArea"></div>
+		<div id="imageCaption">
+			<p>
+				This is a caption. Imagine that!
+			</p>
+		</div>
 	</div>
 	<div class="content round">
 	</div>
@@ -49,6 +54,7 @@
 		var currentPostId = '';
 		var currentImageArray = [];
 		var isFirstImage = true;
+		var loadedPosts = [];
 
 		// Load JSON data
 		$(document).ready(function() {
@@ -101,7 +107,10 @@
 			}
 			toggleModal();
 			isFirstImage = true;
-			loadImages(currentPostId);
+			if($.inArray(currentPostId, loadedPosts) == -1) {
+				loadImages(currentPostId);
+				loadedPosts.push(currentPostId);
+			}
 		});
 
 		// Close the modal when clicking outside its bounds
@@ -140,26 +149,27 @@
 		function switchImage(isPositive) {
 			var $fspic = $('img.currentImage');
 			if(isPositive) {
-				console.log("siblings: " + ($fspic.siblings(":last").attr('src')));
-				$fspic.fadeOut(300);
-				if($fspic.next().attr('class') == undefined) {
-					$fspic.siblings().first()
-						.fadeIn(300)
-						.addClass('currentImage').end()
-					.removeClass('currentImage');
+				if($fspic.parent().children("img:last").attr('src') == $fspic.attr('src')) {
+					$fspic.parent().children("img:first")
+						.fadeIn()
+						.addClass('currentImage');
 				} else {
 					$fspic.next()
-						.fadeIn(300)
-						.addClass('currentImage').end()
-					.removeClass('currentImage');
+						.fadeIn()
+						.addClass('currentImage');
 				}
+				$fspic.fadeOut().removeClass("currentImage");
 			} else {
-				console.log("siblings: " + ($fspic.siblings(":last").attr('src')));
-				$fspic.fadeOut(300)
-				.prev()
-					.fadeIn(300)
-					.addClass('currentImage').end()
-				.removeClass('currentImage');
+				if($fspic.parent().children("img:first").attr('src') == $fspic.attr('src')) {
+					$fspic.parent().children("img:last")
+						.fadeIn(300)
+						.addClass('currentImage');
+				} else {
+					$fspic.prev()
+						.fadeIn()
+						.addClass('currentImage');
+				}
+				$fspic.fadeOut().removeClass("currentImage");
 			}
 		}
 
@@ -191,6 +201,7 @@
 		});
 
 		function loadImages(folder) {
+			$('#pictureViewer').css("background-image", "url(pictures/loader.gif')");
   		var preload = new createjs.LoadQueue();
  	 		preload.addEventListener("fileload", handleFileComplete);
 			for (var i = 0; i < currentImageArray.length; i++) {
@@ -199,12 +210,13 @@
 					src:imageString
 				});
 			}
+			preload.on("complete", handleComplete, this);
 		}
 
 		function handleFileComplete(event) {
 			var item = event.result;
 			var jitem = $(item);
-			jitem.addClass("full-screen-picture").attr('alt', "pictures/loader.gif");
+			jitem.addClass("full-screen-picture");
 			if(isFirstImage) {
 				jitem.addClass("currentImage");
 				isFirstImage = false;
@@ -213,6 +225,10 @@
 			}
 			jitem.prependTo('#pictureViewer');
 			console.log("file " + jitem.attr('src')  + "  loaded");
+		}
+
+		function handleComplete(event) {
+			$('#pictureViewer').css("background-image", "none");
 		}
 
 	</script>
