@@ -149,12 +149,9 @@ button:active {
 	background-color: rgba(0,0,0,0.4);
 	border-radius: 25px;
 	text-align: center;
-	margin-top: auto;
-	margin-bottom: auto;
-	margin-left: 20px;
-	margin-right: 20px;
-	width: 400px;
-	float: left;
+	margin: auto;
+	width: 50%;
+	float: center;
 }
 
 .round-link a {

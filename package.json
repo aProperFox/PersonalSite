@@ -1,0 +1,17 @@
+{
+  "name": "public_html",
+  "version": "0.0.0",
+  "description": "",
+  "main": "utils.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "server"
+  ],
+  "author": "Tyler Olson",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~4.9.8"
+  }
+}

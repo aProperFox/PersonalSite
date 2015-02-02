@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="main">
-	<h1>Choose which post to update:</h1>
+	<h1>Choose which post to delete:</h1>
 	<button id="updateButton">Select</button>
 	<form >
  		Title<br/>
@@ -25,7 +25,7 @@
 </div>
 
 <div id="alertModal">
-	<h2>Did you fill out all fields?</h2>
+	<h2>ARE YOU POSITIVE YOU WANT TO DELETE THIS POST???</h2>
 	<input type='button' value='OK' id="closeModal">
 </div>
 
@@ -47,35 +47,34 @@ function toggleAlertModal() {
 	$('.overlay').fadeToggle(300);
 }
 
+function deletePost() {
+	$.ajax({
+   	url: 'delete/' + postId,
+   	type: 'DELETE',
+   	success: function(result) {
+			$('#postResultMessage')
+				.css('color', 'green')
+				.text("Post successfully deleted from server")
+				.fadeIn(300);
+			console.log(result);
+  	},
+    error: function (xhr, ajaxOptions, thrownError) {
+			$('#postResultMessage')
+				.css('color', 'red')
+				.text("ERROR: " + thrownError)
+				.fadeIn(300);
+		}
+	});
+}
+
 $('#closeModal').click(function() {
+	deletePost();
 	toggleAlertModal();
 });
 
 $('#submitButton').click(function() {
-	var title, text, postText, postData;
-	title = $('#title').val();
-	text = $('#text').val().replace(/\n/g, "<br />");
-	if(title == '' || text == '' || title == null || text == null) {
-		toggleAlertModal();
-		return;
-	}
-	postText = '{"title": "' + title + '", "text": "' + text + '"}';
-	postData = JSON.parse(postText);
+	toggleAlertModal();
 
-
-	$.post( "update/" + postId, postData, function(successData) {
-		$('#postResultMessage')
-			.css('color', 'green')
-			.text("Post successfully added to database")
-			.fadeIn(300);
-		console.log(successData);
-	})
-	.fail(function() {
-		$('#postResultMessage')
-			.css('color', 'red')
-			.text("AN ERROR OCCURRED")
-			.fadeIn(300);
-  });
 });
 
 $('#updateButton').click(function() {
@@ -90,7 +89,6 @@ function toggleBlogModal() {
 //--------------BLOG LOAD FUNCTIONS--------------\\
 
 	var posts = [];	
-
 	var url = "http://tylerolson.us:2015/";
 
 	// Load JSON data

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="javascript" type="javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
+</head>
+<body>
+
+	<canvas id="notes" width=500 height=1000>
+
+
+	</canvas>
+
+<script>
+	$(document).ready(function() {
+		var stage = new createjs.Stage("notes");
+		var circle = new createjs.Shape();
+		circle.graphics.beginFill("red").drawCircle(0, 0, 50);
+		circle.x = 100;
+		circle.y = 100;
+		stage.addChild(circle);
+
+		stage.update();
+	});
+</script>
+
+</body>
+
+</html>

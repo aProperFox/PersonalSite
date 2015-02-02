@@ -11,7 +11,7 @@ var server = express();
 // Config
 server.use(bodyParser());
 server.use(methodOverride());
-server.use(express.static(__dirname + '/blog'));
+server.use(express.static(__dirname));
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -32,7 +32,7 @@ server.get('/api', function (req, res, next) {
 	res.send('Our sample API is up...');
 });
 
-server.get('/getposts', function (req, res, next) {
+server.get('/blog/getposts', function (req, res, next) {
   // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', '*');
   // Request headers you wish to allow
@@ -60,7 +60,7 @@ server.get('/getposts', function (req, res, next) {
 	});
 });
 
-server.get('/getimages/:dir', function (req, res, next) {
+server.get('/blog/getimages/:dir', function (req, res, next) {
 	res.writeHead(200, {'Content-Type': 'application/json'}); // Sending data via json
 	fs.readdir("./blog/pictures/" + req.params.dir, function (err, files) {
  	 if (err) throw err;

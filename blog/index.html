@@ -55,6 +55,8 @@
 		var currentImageArray = [];
 		var isFirstImage = true;
 		var loadedPosts = [];
+		var loadedPicturesHash = new Object();
+		var loadingPostIds = [];
 
 		// Load JSON data
 		$(document).ready(function() {
@@ -73,6 +75,7 @@
 						});
 						imageHash[val.id] = imagesString;
 					});
+					loadedPicturesHash[val.id] = [];
 				});
 			});
 		});
@@ -108,6 +111,7 @@
 			toggleModal();
 			isFirstImage = true;
 			if($.inArray(currentPostId, loadedPosts) == -1) {
+				loadingPostIds.push(currentPostId);
 				loadImages(currentPostId);
 				loadedPosts.push(currentPostId);
 			}
@@ -164,6 +168,8 @@
 					$fspic.parent().children("img:last")
 						.fadeIn(300)
 						.addClass('currentImage');
+				} else if(imageHash[currentPostId].length == 1) {
+					$fspic.fadeIn();
 				} else {
 					$fspic.prev()
 						.fadeIn()
@@ -217,6 +223,7 @@
 			var item = event.result;
 			var jitem = $(item);
 			jitem.addClass("full-screen-picture");
+			loadedPicturesHash[loadingPostIds[0]].push(jitem);
 			if(isFirstImage) {
 				jitem.addClass("currentImage");
 				isFirstImage = false;
@@ -229,6 +236,7 @@
 
 		function handleComplete(event) {
 			$('#pictureViewer').css("background-image", "none");
+			loadingPostIds.shift();
 		}
 
 	</script>

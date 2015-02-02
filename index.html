@@ -1,0 +1,573 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  
+  <!-- disable zooming -->
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=0" />
+  
+  <title>Tyler Olson's Wild World</title>
+  
+  <link rel="icon" href="heman.gif"/>
+  <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css" />-->
+  <link rel="stylesheet" href="style.css" media="screen" />
+  <link rel="stylesheet" href="css/jquery-ui.css"/>
+
+    <style media="screen">
+
+    .container {
+      width: 50%;
+      height: 140px;
+      margin: auto auto 40px;
+      text-align: center;
+      border: solid #e3e3e3;
+      top: 37%;
+      width: 450px; 
+      display: none;
+      position: absolute;
+      -webkit-perspective: 1100px;
+         -moz-perspective: 1100px;
+           -o-perspective: 1100px;
+              perspective: 1100px;
+    }
+
+
+    #carousel {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      -webkit-transform-style: preserve-3d;
+         -moz-transform-style: preserve-3d;
+           -o-transform-style: preserve-3d;
+              transform-style: preserve-3d;
+    }
+
+    .ready #carousel {
+      -webkit-transition: -webkit-transform .5s;
+         -moz-transition: -moz-transform .5s;
+           -o-transition: -o-transform .5s;
+              transition: transform .5s;
+    }
+
+    #carousel.panels-backface-invisible .article {
+      -webkit-backface-visibility: hidden;
+         -moz-backface-visibility: hidden;
+           -o-backface-visibility: hidden;
+              backface-visibility: hidden;
+    }
+
+    #carousel .article {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 116px;
+      top: 10px;
+      line-height: 116px;
+      font-size: 80px;
+      font-weight: bold;
+      color: #dddddd;
+      text-align: center;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -user-select: none;
+      cursor:pointer;
+    }
+
+    .ready #carousel .article {
+      -webkit-transition: opacity .5s, -webkit-transform .5s;
+         -moz-transition: opacity .5s, -moz-transform .5s;
+           -o-transition: opacity .5s, -o-transform .5s;
+              transition: opacity .5s, transform .5s;
+    }
+    
+    .cornered {
+      border: none;
+    }
+    
+    .article:nth-child(1):first-letter {
+      color: #BF8282;
+    }
+    .article:nth-child(2):first-letter {
+      color: #ABBF87;
+    }
+    .article:nth-child(3):first-letter {
+      color: #9495BA;
+    }
+    .article:nth-child(4):first-letter {
+      color: #D9DA87;
+    }
+    .article:nth-child(5):first-letter {
+      color: #78ACB3;
+    }
+    .article:nth-child(6):first-letter {
+      color: #B881C7;
+    }
+
+    .information {
+      text-align: center;
+      margin: auto;
+      width: 50%;
+      min-width: 600px;
+    }
+
+    .info {
+      display: none;
+      color: #dddddd;
+    }
+
+    #scheme-toggle {
+      float: right;
+    }
+
+    a {
+      color: #aaaadd;
+    }
+
+    a:hover {
+      color: #eeeeee;
+    }
+
+    .selected {
+      color: #aaaaaa;
+    }
+
+    .paragraph {
+      text-align: left;
+      display: block;
+    }
+
+    .quote {
+      font-family: cursive;
+      font-size: 20px;
+      color: #9495BA;
+      font-style: italic; 
+    }
+
+  </style>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/swipe.js"></script>
+</head>
+<body>
+
+  <input type="image" id="scheme-toggle" src="images/night.png" width="40" height="40">
+  <script>
+    function toggleNightAndDay(state) {
+      if(state == "night") {
+        $('body').css("background", "#3e3e3e");
+        $('.info').css("color", "#dddddd");
+        $('#scheme-toggle').attr('src', "images/night.png");
+      } else {
+        $('body').css("background", "#eeeeee");
+        $('.info').css("color", "#333333");
+        $('#scheme-toggle').attr('src', "images/day.png");
+      }
+    }
+   
+    toggleNightAndDay("night");
+
+    // Change color based on button
+    $('body').on('click', '#scheme-toggle', function() {
+      if($(this).attr('src') == "images/day.png") {
+        toggleNightAndDay("night");
+      } else {
+        toggleNightAndDay("day");
+      }
+    });
+  </script>
+
+
+  <!--HTML-->
+
+
+
+  <div style="padding-bottom: 20%"></div>
+
+  <section class="container">
+    <div id="carousel">
+      <h1 class="article" id="0" style="color: #aaaaaa" data-information="welcome">Welcome!</h1>
+      <h1 class="article" id="1" data-information="blog">Blog</h1>
+      <h1 class="article" id="2" data-information="projects">Projects</h1>
+      <h1 class="article" id="3" data-information="education">Education</h1>
+      <h1 class="article" id="4" data-information="occupation">Occupation</h1>
+      <h1 class="article" id="5" data-information="contact">Contact</h1>
+    </div>
+  </section>
+
+  <section class="information">
+  	<div class="info" id="welcome">
+    	<h2 style="text-align:left;"><font size="6">Who is Tyler Olson?</font></h2>
+    	<div class="paragraph"><font size="4">
+				<h3>Work related</h3>
+	I am a Software Engineer with a Bachelor's degree in Computer Science from the University of Colorado at Boulder. I also have an interest in obtaining fluency in a foreign language and plan on living
+	in a foreign country to further broaden my Spanish speaking ability. <br /><br />In my freshman year at CU, I was drawn to mechanical engineering and pursued what potential careers it could 
+	bring. Along with three fellow students, I designed and created a glove to help complete everyday tasks that are difficult for citizens with a loss of ability in their hands. We donated the 
+	glove to one individual who was once an accomplished biker before a tragic accident. Despite his unfortunate past, he was ecstatic when we presented the glove to him and has been using it 
+	ever since. We were offered a patent on the design of the glove but regrettably declined due to a lack of funding. Recently, I built an Android virtual reality game with the intention of 
+	teaching users spanish vocabulary and the concept of language articles.<br /><br />I'm most interested in programming user end content from websites to video games, but I try to work with
+	everything in between. One day I aspire to own a business creating cross-platform applications that can make everyday tasks simpler to all users.
+				</br></br>
+				<h3>Personal</h3>
+	I've lived in Colorado my entire life and have loved it every day. Though most of my family lives in Wisconsin, 
+	my parents live close by in New Castle, CO and are always willing to help me with whatever it is I may need. My brother is a bio-chemical engineer working for Schlumberger 
+	(a petroleum company) in western Pennsylvania.<br /><br />I love the outdoors; camping, hiking, golfing, and will take any chance i get to travel. In March 2015 I will be moving 
+	to Cuenca, Ecuador to immerse myself in a new culture and further broaden my Spanish vocabulary. I plan to live there for several years and pursue an online career in the field of 
+	Computer Science. You can keep up to date with my adventures at my <a href="./blog">blog site</a></br></br>I have a passion for playing my guitar and expanding my knowledge of 
+	music as a whole as I've always dreamed of being a musician. Another hobby I love is building/crafting things from wood. In High School I created a	3-Dimensional interactive board 
+	game based off of trivia from the book Siddhartha. My desire to build/create was largely influenced by  my Grandfather whom in his time was a high school shop teacher and always 
+	had fun making useful items and gifts from wood.<br />
+</font>
+    	</div>
+
+  	</div>
+  	<div class="info" id="blog">
+    	<h2 style="text-align:left;">I'm currently in Ecuador!</h2>
+    	<div class="paragraph"><a href="./blog">Keep up to date with my blog.</a></br></br>
+			</div>
+  	</div>
+  	<div class="info" id="projects">
+      <h2 style="text-align:left">Look what I can do!</h2>
+			<div class="paragraph">
+	Recently, I've been working towards designing, programming, and finishing a new project every month. I'm not binding myself to one technology, but I do have a great interest in
+	developing Android applications and have developed several apps that are currently on the Google play store. These Android projects include:</br>
+				<ul>
+	  			<li><a href="https://play.google.com/store/apps/details?id=toe.tac.tic.toetactic">Tic Tac Toe</a></li>
+	  			<li><a href="https://play.google.com/store/apps/details?id=games.ride.car.dartscorekeeper">Dart Score Keeper</a></li>
+	  			<li><a href="https://play.google.com/store/apps/details?id=com.carridegames.mastermind">Master Mind</a></li>
+				</ul>
+	But will continue expanding as time goes on. 
+	</br></br>
+	Currently I'm working on integrating new technologies into my Android apps such as API calls and an SQLite database for storing/accessing user stats, and potentially creating Chromecast
+	receiver applications to sync with.
+      </div>
+    </div>
+    <div class="info" id="education">
+      <h2 style="text-align:left;">
+        <font size="5">My Education</font>
+      </h2>
+      <div class="paragraph">
+        <ul>
+          <li><font size="3">
+            Bachelor of Science in Computer Science from CU Boulder, May 2014<br />
+          </li>
+          <li>
+            Strong Spanish speaking ability
+          </li>
+        </ul>
+      </div>
+
+      <h2 style="text-align:left;">
+        <font size="5">Programming Experience</font>
+      </h2>
+      <div class="paragraph">
+        <ul>
+          <li>
+            <font size="3">Proficient in C++, C#, Java, Android, OOP, JS, HTML, CSS, MYSQL, Linux, Windows
+          </li>
+          <li>
+            Understanding of Python, OpenGL, C, Ruby
+          </li>
+          <li>
+            Basic knowledge of Assembly Code, Functional Programming languages
+            </font>
+          </li>
+        </ul>
+      </div>
+
+      <h2 style="text-align:left;">
+        <font size="5">Work in My Fields of Study</font>
+      </h2>
+      <div class="paragraph">
+        <ul>
+          <li>
+            <font size="3">Android Mastermind game (store listing <a href="https://play.google.com/store/apps/details?id=com.carridegames.mastermind">here</a>)
+          </li>
+	  			<li>
+	    			Android Dart Score Keeping app (store listing <a href="https://play.google.com/store/apps/details?id=games.ride.car.dartscorekeeper">here</a>)
+	  			</li>
+	  			<li>
+	    			Android Tic Tac Toe game (store listing <a href="https://play.google.com/store/apps/details?id=toe.tac.tic.toetactic">here</a>)
+	  			</li>
+					<li>
+						Android Virtual reality language learning game (no store listing as it was a school project, but source code <a href="https://github.com/olsontl/seniorproject">here</a>)
+					</li>
+          <li>
+            Android flashcard Application for Spanish-English learning
+         </li>
+         <li>
+           OpenGL 3D macro miniature golf game
+         </li>
+         <li>
+           Traveled to Costa Rica developing Spanish speaking ability
+         </li>
+         <li>
+           Working with the owner of Hi Grade Recycling to better improve the company's website
+         </li>
+         <li>
+           Automating regression tests with Ruby, Selenium, and Cucumber
+         </li>
+				</font>
+       </ul>
+     </div>
+   </div>
+    </div>
+    <div class="info" id="occupation">
+      <h2 style="text-align:left">AppDirect</h2>
+	<div class="paragraph">
+	I worked for the San Francisco based company <a href="appdirect.com">AppDirect</a> as a Quality Assurance Engineer from their office in Boulder, CO from May 2013 to February 2015. AppDirect excels as one of the
+	leading cloud service marketplace and management platforms that enables companies to easily distribute web-based services.</br>
+	Although I was the only Quality Assurance Engineer for their child company StandingCloud, I also provided services as an Automation engineer, and part time Java developer.
+	</div>
+    </div>
+    <div class="info" id="contact">
+      <h2 style="text-align: left">Email me</h2>
+	<div style="text-align: left">
+	  <form action="MAILTO:tolson.louis@gmail.com" method="post" enctype="text/plain" id="email-name">
+          Name: <br>
+  	  <input type="text" name="name" class="form" ><br>
+	  Email: <br>
+          <input type="text" name="email" class="form" ><br>
+	  Message: <br>
+  	  <textarea  name="message" class="form" maxlength="1000" cols="75" rows="15"></textarea><br>
+	  <input type="submit" value="Send">
+	</div>
+    </div>
+  </section>
+	
+
+  <!-- SCRIPTS! -->
+
+
+  <script src="utils.js"></script>
+  <script>
+
+
+    var container, moveAmount, containerHalfWidth, currentArticleId;
+    $(document).ready(function() {
+        container = $('.container');
+	containerHalfWidth = container.width()/2;
+        moveAmount = $(window).width()/2 - containerHalfWidth;
+
+	currentArticleId = 0;
+
+        container.css("left", moveAmount + "px");
+        container.show();
+      
+        $(window).on('resize', function() {
+            moveAmount = $(window).width()/2 - containerHalfWidth;
+            if(!container.hasClass('cornered')){
+	        container.css("left", moveAmount + "px");
+            }
+        });
+
+    });
+
+
+    function getColorByNumber(number) {
+      switch(number) {
+        case 0:
+            return "#BF8282";
+        case 1:
+            return "#ABBF87";
+        case 2:
+            return "#9495BA";
+        case 3:
+            return "#D9DA87";
+        case 4:
+            return "#78ACB3";
+        case 5:
+            return "#B881C7";
+        default:
+          return null;
+      }
+    }
+
+    
+    var transformProp = Modernizr.prefixed('transform');
+
+    function Carousel3D ( el ) {
+      this.element = el;
+
+      this.rotation = 0;
+      this.panelCount = 0;
+      this.totalPanelCount = this.element.children.length;
+      this.theta = 0;
+
+    }
+
+    Carousel3D.prototype.modify = function() {
+
+      var panel, angle, i;
+
+      this.panelSize = this.element[ 'offsetHeight' ];
+
+      this.rotateFn = 'rotateX';
+      this.theta = 360 / this.panelCount;
+
+      // do some trig to figure out how big the carousel
+      // is in 3D space
+      this.radius = 280;
+      
+      for ( i = 0; i < this.panelCount; i++ ) {
+        panel = this.element.children[i];
+        angle = this.theta * i;
+        panel.style.opacity = 1;
+        //panel.style.backgroundColor = 'hsla(' + angle + ', 100%, 50%, 0.8)';
+        // rotate panel, then push it out in 3D space
+        panel.style[ transformProp ] = this.rotateFn + '(' + angle + 'deg) translateZ(' + this.radius + 'px)';
+      }
+
+      // adjust rotation so panels are always flat
+      this.rotation = Math.round( this.rotation / this.theta ) * this.theta;
+
+      this.transform();
+
+    };
+
+    Carousel3D.prototype.transform = function() {
+      // push the carousel back in 3D space,
+      // and rotate it
+      this.element.style[ transformProp ] = 'translateZ(-' + this.radius + 'px) ' + this.rotateFn + '(' + this.rotation + 'deg)';
+    };
+    
+    var carousel;
+    var rotateUp = function() {
+      carousel.rotation += carousel.theta;
+      var selectedElement = $('#' + currentArticleId);
+      var currentId = parseInt(currentArticleId);
+      if ( currentId == 0 ) {
+        currentArticleId = '5';
+      } else {
+        currentId -= 1;
+        currentArticleId = currentId.toString();
+      }
+      $('#' + currentArticleId).css('color', '#aaaaaa');
+      selectedElement.css('color', '#dddddd');
+      carousel.modify();
+    }
+
+    var rotateDown = function() {
+      carousel.rotation -= carousel.theta;
+      var selectedElement = $('#' + currentArticleId);
+      var currentId = parseInt(currentArticleId);
+      if ( currentId == 5 ) {
+        currentArticleId = '0';
+      } else {
+        currentId += 1;
+        currentArticleId = currentId.toString();
+      }
+      $('#' + currentArticleId).css('color', '#aaaaaa');
+      selectedElement.css('color', '#dddddd');
+      carousel.modify();
+    }
+
+      
+    $('#carousel').on('click', '.article', function() { 	
+      $this = $(this);
+      var thisId = $this.attr('id');
+      if (currentArticleId == '0' && thisId == '5') {
+        rotateUp();
+      } else if (thisId == '0' && currentArticleId == '5') { 
+        rotateDown();
+      } else if(currentArticleId == thisId) {
+        var $container = $('.container');
+        var color = getColorByNumber(parseInt($this.attr('id')));    
+        if( $container.hasClass('cornered')) {
+          $('.information').find('#' + $this.data('information')).fadeOut(300);
+          setTimeout( function() {
+            $container.animate({'left': '+=' + moveAmount + 'px', 'top': '+=37%'}, 500)
+              .removeClass('cornered');
+            // Change color manually since not handled by rotate function
+            $this.css('color', '#aaaaaa');
+          }, 500);
+          $this.siblings('.article').delay(500).show(300);
+        } else {
+         	$container.animate({'left': '-=' + moveAmount + 'px', 'top': '-=37%'}, 500)
+       	  	.addClass('cornered');
+         	$this.css({"color": color});
+         	$this.siblings('.article').hide(300);
+         	$('.information').find('#' + $this.data('information')).hide().delay(500).fadeIn(500);
+        }
+      } else if(currentArticleId > thisId){
+        rotateUp();
+      } else {
+        rotateDown();
+      }
+      currentArticleId = thisId;
+    });
+
+    var MouseWheelHandler = function(e) {
+      // cross-browser wheel delta
+      if(!$('.container').hasClass('cornered')) {
+        var e = window.event || e; // old IE support
+        var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+        if(delta == 1) {
+          rotateDown();
+        } else {
+          rotateUp();
+        }
+      }      
+    }
+
+
+    // Handle scroll events
+    var spinner = document;
+    if (spinner.addEventListener) {
+      // IE9, Chrome, Safari, Opera
+      spinner.addEventListener("mousewheel", MouseWheelHandler, false);
+      // Firefox
+      spinner.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+    }
+      // IE 6/7/8
+    else {
+      spinner.attachEvent("onmousewheel", MouseWheelHandler);
+    }
+
+    var init = function() {
+
+
+      carousel = new Carousel3D( document.getElementById('carousel') );
+
+      // populate on startup
+      carousel.panelCount = $('body').find('.article').length,
+      carousel.modify();
+
+      carousel.element.toggleClassName('panels-backface-invisible');
+
+      setTimeout( function(){
+        document.body.addClassName('ready');
+      }, 0);
+
+    };
+
+    // Handle key events
+
+    $(document).keydown(function(e) {
+    switch(e.which) {
+        case 38: // up
+        rotateDown();
+        break;
+
+        case 40: // down
+        rotateUp();
+        break;
+
+        default: return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+    });
+
+    $(document).on('swipedown',function(){rotateDown();} );
+    $(document).on('swipeup',function(){rotateUp();} );
+
+
+    window.addEventListener( 'DOMContentLoaded', init, false);
+  </script>
+
+
+</body>
+</html>
