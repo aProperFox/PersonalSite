@@ -3,7 +3,7 @@
 <head>
 	<title>Fun times in Ecuador</title>
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="icon" href="pictures/icon.png">
+	<link rel="icon" href="blog/pictures/icon.png">
 	<link href='http://fonts.googleapis.com/css?family=Poiret+One|Oxygen:400,300,700' rel='stylesheet' type='text/css'>
 	<script type="text/javascript"> 
 		var ua=navigator.userAgent; 
@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 	<script src="js/preloadjs-0.6.0.min.js"></script>
+	<script src="js/tinysort.min.js"></script>
 </head>
 <body>
 
@@ -26,7 +27,7 @@
 	<div class="modal">
 		<h1 class="close-button" id="post-close"><b>X</b></h1>
 		<div id="post-image">
-			<img src="#">
+			<img>
 		</div>
 		<div class="post-text">
 			<h2 id="post-title"></h2>
@@ -45,11 +46,16 @@
 			</p>
 		</div>
 	</div>
-	<div class="content round">
+	<div class="content">
+	</div>
+
+	<div class="footer-bar">
+		<h1 class="center"></h1>
 	</div>
 
 	<script type="text/javascript">
 		var posts = [];	
+		var postHTMLs = [];
 		var imageHash = new Object();
 		var currentPostId = '';
 		var currentImageArray = [];
@@ -60,24 +66,33 @@
 
 		// Load JSON data
 		$(document).ready(function() {
-			var intro = '<div class="post">\n<figure>\n<img src="',
+			var intro = '<div class="post" id="',
+					second = '">\n<figure>\n<img src="',
 					middle = '"></img>\n<figcaption class="unselectable">',
 					end = '</figcaption>\n</figure>\n</div>';
 			$.getJSON("getposts", function(data) {
 				$.each( data, function(key, val) {
 					posts.push(val);
+					var divID = val.date;
 					$.getJSON("getimages/" + val.id, function(images) {
 						var friendlyImage = ('pictures/' + val.id + '/' + images[0].name);
-						$('.content').append($(intro + friendlyImage + middle + val.title + end));
+						postHTMLs.push($.parseHTML(intro + divID + second + friendlyImage + middle + val.title + end));
 						var imagesString = [];
 						images.forEach(function(element, index, arr) {
 							imagesString.push(element.name);
 						});
 						imageHash[val.id] = imagesString;
+					}).done(function(data) {
+    				postHTMLs.forEach(function(element, index, arr) {
+							console.log("lskjenfselksenf");
+							$(element).appendTo(".content");
+						});
+						tinysort('.content > div',{attr: 'id'});
 					});
 					loadedPicturesHash[val.id] = [];
 				});
 			});
+
 		});
 
 		// Toggle the post modal visibility
@@ -99,7 +114,7 @@
 				posts.forEach(function(element, index, arr) {
 					if(element.id.indexOf(imageSource.substring(9,33)) != -1) {
 						$('#postContent').empty().append($.parseHTML(element.text));
-						$('#post-date').text(element.date);
+						$('#post-date').text(element.friendlyDate);
 						currentPostId = element.id;
 						currentImageArray = imageHash[element.id];
 						throw BreakException;

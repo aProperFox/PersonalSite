@@ -9,145 +9,11 @@
   
   <title>Tyler Olson's Wild World</title>
   
-  <link rel="icon" href="heman.gif"/>
+  <link rel="icon" href="icon.png"/>
   <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css" />-->
-  <link rel="stylesheet" href="style.css" media="screen" />
+  <link rel="stylesheet" href="css/styles.css" media="screen" />
   <link rel="stylesheet" href="css/jquery-ui.css"/>
 
-    <style media="screen">
-
-    .container {
-      width: 50%;
-      height: 140px;
-      margin: auto auto 40px;
-      text-align: center;
-      border: solid #e3e3e3;
-      top: 37%;
-      width: 450px; 
-      display: none;
-      position: absolute;
-      -webkit-perspective: 1100px;
-         -moz-perspective: 1100px;
-           -o-perspective: 1100px;
-              perspective: 1100px;
-    }
-
-
-    #carousel {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      -webkit-transform-style: preserve-3d;
-         -moz-transform-style: preserve-3d;
-           -o-transform-style: preserve-3d;
-              transform-style: preserve-3d;
-    }
-
-    .ready #carousel {
-      -webkit-transition: -webkit-transform .5s;
-         -moz-transition: -moz-transform .5s;
-           -o-transition: -o-transform .5s;
-              transition: transform .5s;
-    }
-
-    #carousel.panels-backface-invisible .article {
-      -webkit-backface-visibility: hidden;
-         -moz-backface-visibility: hidden;
-           -o-backface-visibility: hidden;
-              backface-visibility: hidden;
-    }
-
-    #carousel .article {
-      display: block;
-      position: absolute;
-      width: 100%;
-      height: 116px;
-      top: 10px;
-      line-height: 116px;
-      font-size: 80px;
-      font-weight: bold;
-      color: #dddddd;
-      text-align: center;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      -user-select: none;
-      cursor:pointer;
-    }
-
-    .ready #carousel .article {
-      -webkit-transition: opacity .5s, -webkit-transform .5s;
-         -moz-transition: opacity .5s, -moz-transform .5s;
-           -o-transition: opacity .5s, -o-transform .5s;
-              transition: opacity .5s, transform .5s;
-    }
-    
-    .cornered {
-      border: none;
-    }
-    
-    .article:nth-child(1):first-letter {
-      color: #BF8282;
-    }
-    .article:nth-child(2):first-letter {
-      color: #ABBF87;
-    }
-    .article:nth-child(3):first-letter {
-      color: #9495BA;
-    }
-    .article:nth-child(4):first-letter {
-      color: #D9DA87;
-    }
-    .article:nth-child(5):first-letter {
-      color: #78ACB3;
-    }
-    .article:nth-child(6):first-letter {
-      color: #B881C7;
-    }
-
-    .information {
-      text-align: center;
-      margin: auto;
-      width: 50%;
-      min-width: 600px;
-    }
-
-    .info {
-      display: none;
-      color: #dddddd;
-    }
-
-    #scheme-toggle {
-      float: right;
-    }
-
-    a {
-      color: #aaaadd;
-    }
-
-    a:hover {
-      color: #eeeeee;
-    }
-
-    .selected {
-      color: #aaaaaa;
-    }
-
-    .paragraph {
-      text-align: left;
-      display: block;
-    }
-
-    .quote {
-      font-family: cursive;
-      font-size: 20px;
-      color: #9495BA;
-      font-style: italic; 
-    }
-
-  </style>
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-ui.min.js"></script>
   <script src="js/swipe.js"></script>
@@ -182,7 +48,6 @@
 
 
   <!--HTML-->
-
 
 
   <div style="padding-bottom: 20%"></div>
@@ -226,22 +91,45 @@
   	</div>
   	<div class="info" id="blog">
     	<h2 style="text-align:left;">I'm currently in Ecuador!</h2>
-    	<div class="paragraph"><a href="./blog">Keep up to date with my blog.</a></br></br>
+    	<div class="paragraph">
+				<h4>Checkout my blog:</h4>
+				<a href="./blog"><img src="images/screenshot.png" id="screenshot"></a>
 			</div>
+			<!--div id="blogData"></div-->
   	</div>
   	<div class="info" id="projects">
-      <h2 style="text-align:left">Look what I can do!</h2>
+      <h2 style="text-align:left">Work in My Field of Study</h2>
 			<div class="paragraph">
 	Recently, I've been working towards designing, programming, and finishing a new project every month. I'm not binding myself to one technology, but I do have a great interest in
-	developing Android applications and have developed several apps that are currently on the Google play store. These Android projects include:</br>
-				<ul>
-	  			<li><a href="https://play.google.com/store/apps/details?id=toe.tac.tic.toetactic">Tic Tac Toe</a></li>
-	  			<li><a href="https://play.google.com/store/apps/details?id=games.ride.car.dartscorekeeper">Dart Score Keeper</a></li>
-	  			<li><a href="https://play.google.com/store/apps/details?id=com.carridegames.mastermind">Master Mind</a></li>
-				</ul>
-	But will continue expanding as time goes on. 
-	</br></br>
-	Currently I'm working on integrating new technologies into my Android apps such as API calls and an SQLite database for storing/accessing user stats, and potentially creating Chromecast
+	developing Android applications and have developed several apps that are currently on the Google play store. Here are some of the projects I've completed over the last few years:</br>
+      <div class="paragraph">
+        <ul>
+          <li>
+            <font size="3">Android Mastermind game (store listing <a href="https://play.google.com/store/apps/details?id=com.carridegames.mastermind">here</a>)
+          </li>
+	  			<li>
+	    			Android Dart Score Keeping app (store listing <a href="https://play.google.com/store/apps/details?id=games.ride.car.dartscorekeeper">here</a>)
+	  			</li>
+	  			<li>
+	    			Android Tic Tac Toe game (store listing <a href="https://play.google.com/store/apps/details?id=toe.tac.tic.toetactic">here</a>)
+	  			</li>
+					<li>
+						Android Virtual reality language learning game (no store listing as it was a school project, but source code <a href="https://github.com/olsontl/seniorproject">here</a>)
+					</li>
+          <li>
+            Android flashcard Application for Spanish-English learning
+         </li>
+         <li>
+           OpenGL 3D macro miniature golf game
+         </li>
+         <li>
+           This website, and my <a href="./blog">blog</a>
+         </li>
+				</font>
+       </ul>
+     </div>
+	</br>
+	Currently I'm working on integrating new technologies into my Android apps such as API calls, an SQLite database for storing/accessing user stats, and potentially creating Chromecast
 	receiver applications to sync with.
       </div>
     </div>
@@ -269,7 +157,7 @@
             <font size="3">Proficient in C++, C#, Java, Android, OOP, JS, HTML, CSS, MYSQL, Linux, Windows
           </li>
           <li>
-            Understanding of Python, OpenGL, C, Ruby
+            Understanding of Python, OpenGL, C, Ruby, Selenium Web-driver, Cucumber
           </li>
           <li>
             Basic knowledge of Assembly Code, Functional Programming languages
@@ -277,92 +165,59 @@
           </li>
         </ul>
       </div>
-
-      <h2 style="text-align:left;">
-        <font size="5">Work in My Fields of Study</font>
-      </h2>
-      <div class="paragraph">
-        <ul>
-          <li>
-            <font size="3">Android Mastermind game (store listing <a href="https://play.google.com/store/apps/details?id=com.carridegames.mastermind">here</a>)
-          </li>
-	  			<li>
-	    			Android Dart Score Keeping app (store listing <a href="https://play.google.com/store/apps/details?id=games.ride.car.dartscorekeeper">here</a>)
-	  			</li>
-	  			<li>
-	    			Android Tic Tac Toe game (store listing <a href="https://play.google.com/store/apps/details?id=toe.tac.tic.toetactic">here</a>)
-	  			</li>
-					<li>
-						Android Virtual reality language learning game (no store listing as it was a school project, but source code <a href="https://github.com/olsontl/seniorproject">here</a>)
-					</li>
-          <li>
-            Android flashcard Application for Spanish-English learning
-         </li>
-         <li>
-           OpenGL 3D macro miniature golf game
-         </li>
-         <li>
-           Traveled to Costa Rica developing Spanish speaking ability
-         </li>
-         <li>
-           Working with the owner of Hi Grade Recycling to better improve the company's website
-         </li>
-         <li>
-           Automating regression tests with Ruby, Selenium, and Cucumber
-         </li>
-				</font>
-       </ul>
-     </div>
-   </div>
     </div>
     <div class="info" id="occupation">
       <h2 style="text-align:left">AppDirect</h2>
 	<div class="paragraph">
-	I worked for the San Francisco based company <a href="appdirect.com">AppDirect</a> as a Quality Assurance Engineer from their office in Boulder, CO from May 2013 to February 2015. AppDirect excels as one of the
+	I worked for the San Francisco based company <a href="http://appdirect.com">AppDirect</a> as a Quality Assurance Engineer from their office in Boulder, CO from May 2013 to February 2015. AppDirect excels as one of the
 	leading cloud service marketplace and management platforms that enables companies to easily distribute web-based services.</br>
 	Although I was the only Quality Assurance Engineer for their child company StandingCloud, I also provided services as an Automation engineer, and part time Java developer.
 	</div>
     </div>
     <div class="info" id="contact">
       <h2 style="text-align: left">Email me</h2>
-	<div style="text-align: left">
-	  <form action="MAILTO:tolson.louis@gmail.com" method="post" enctype="text/plain" id="email-name">
-          Name: <br>
-  	  <input type="text" name="name" class="form" ><br>
-	  Email: <br>
-          <input type="text" name="email" class="form" ><br>
-	  Message: <br>
-  	  <textarea  name="message" class="form" maxlength="1000" cols="75" rows="15"></textarea><br>
-	  <input type="submit" value="Send">
-	</div>
-    </div>
+			<div style="text-align: left">
+      Name: <br>
+  	  <input type="text" name="name" class="form" id="emailName"><br>
+	  	Email: <br>
+      <input type="text" name="email" class="form" id="emailAddress"><br>
+	  	Message: <br>
+  	  <textarea  name="message" class="form" maxlength="1000" cols="75" rows="15" id="emailBody"></textarea><br>
+	  	<button id="sendEmailButton">Send</button>
+			<div id="overlay"></div>
+			<div id="emailModal">
+				<div id="emailModalText">
+					<p></p>
+				</div>
+				<h3>X<h3>
+			</div>
+		</div>
+  </div>
   </section>
 	
 
   <!-- SCRIPTS! -->
 
 
-  <script src="utils.js"></script>
+  <script src="js/utils.js"></script>
+	<script src="js/jquery.mousewheel.min.js"></script>
   <script>
-
 
     var container, moveAmount, containerHalfWidth, currentArticleId;
     $(document).ready(function() {
-        container = $('.container');
-	containerHalfWidth = container.width()/2;
-        moveAmount = $(window).width()/2 - containerHalfWidth;
-
-	currentArticleId = 0;
-
-        container.css("left", moveAmount + "px");
-        container.show();
+      container = $('.container');
+			containerHalfWidth = container.width()/2;
+      moveAmount = $(window).width()/2 - containerHalfWidth;
+			currentArticleId = 0;
+      container.css("left", moveAmount + "px");
+      container.show();
       
-        $(window).on('resize', function() {
-            moveAmount = $(window).width()/2 - containerHalfWidth;
-            if(!container.hasClass('cornered')){
-	        container.css("left", moveAmount + "px");
-            }
-        });
+      $(window).on('resize', function() {
+	      moveAmount = $(window).width()/2 - containerHalfWidth;
+        if(!container.hasClass('cornered')){
+		      container.css("left", moveAmount + "px");
+        }
+      });
 
     });
 
@@ -370,17 +225,17 @@
     function getColorByNumber(number) {
       switch(number) {
         case 0:
-            return "#BF8282";
+    	    return "#BF8282";
         case 1:
-            return "#ABBF87";
+          return "#ABBF87";
         case 2:
-            return "#9495BA";
+          return "#9495BA";
         case 3:
-            return "#D9DA87";
+          return "#D9DA87";
         case 4:
-            return "#78ACB3";
+          return "#78ACB3";
         case 5:
-            return "#B881C7";
+          return "#B881C7";
         default:
           return null;
       }
@@ -465,6 +320,7 @@
       carousel.modify();
     }
 
+		var canAnimate = true;
       
     $('#carousel').on('click', '.article', function() { 	
       $this = $(this);
@@ -477,20 +333,37 @@
         var $container = $('.container');
         var color = getColorByNumber(parseInt($this.attr('id')));    
         if( $container.hasClass('cornered')) {
-          $('.information').find('#' + $this.data('information')).fadeOut(300);
-          setTimeout( function() {
-            $container.animate({'left': '+=' + moveAmount + 'px', 'top': '+=37%'}, 500)
-              .removeClass('cornered');
-            // Change color manually since not handled by rotate function
-            $this.css('color', '#aaaaaa');
-          }, 500);
-          $this.siblings('.article').delay(500).show(300);
+					if(canAnimate) {
+						canAnimate = false;
+          	$('.information').find('#' + $this.data('information')).fadeOut(300);
+          	setTimeout( function() {
+            	$container.animate({'left': '+=' + moveAmount + 'px', 'top': '+=37%'}, 500, function() {
+								canAnimate = true;
+							})
+           	  	.removeClass('cornered');
+           	 	// Change color manually since not handled by rotate function
+          	  $this.css('color', '#aaaaaa');
+          	}, 500);
+          	$this.siblings('.article').delay(500).show(300);
+					}
         } else {
-         	$container.animate({'left': '-=' + moveAmount + 'px', 'top': '-=37%'}, 500)
-       	  	.addClass('cornered');
-         	$this.css({"color": color});
-         	$this.siblings('.article').hide(300);
-         	$('.information').find('#' + $this.data('information')).hide().delay(500).fadeIn(500);
+					if(canAnimate) {
+						canAnimate = false;
+         		$container.animate({'left': '-=' + moveAmount + 'px', 'top': '-=37%'}, 500, function() {
+							canAnimate = true;
+						})
+       	  		.addClass('cornered');
+         		$this.css({"color": color});
+         		$this.siblings('.article').hide(300);
+         		$('.information').find('#' + $this.data('information')).hide().delay(500).fadeIn(500);
+						/*if(currentArticleId == 1) {
+							setTimeout(function() {
+								$("#blogData").load("./blog",function(){
+	 								$('#blogData').fadeIn(500);
+								});
+							}, 500);
+						}*/
+					}
         }
       } else if(currentArticleId > thisId){
         rotateUp();
@@ -500,32 +373,17 @@
       currentArticleId = thisId;
     });
 
-    var MouseWheelHandler = function(e) {
+		// using on
+		$(document).on('mousewheel', function(e) {
       // cross-browser wheel delta
       if(!$('.container').hasClass('cornered')) {
-        var e = window.event || e; // old IE support
-        var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-        if(delta == 1) {
+        if(e.deltaY > 0) {
           rotateDown();
         } else {
           rotateUp();
         }
       }      
-    }
-
-
-    // Handle scroll events
-    var spinner = document;
-    if (spinner.addEventListener) {
-      // IE9, Chrome, Safari, Opera
-      spinner.addEventListener("mousewheel", MouseWheelHandler, false);
-      // Firefox
-      spinner.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
-    }
-      // IE 6/7/8
-    else {
-      spinner.attachEvent("onmousewheel", MouseWheelHandler);
-    }
+		});
 
     var init = function() {
 
@@ -563,7 +421,59 @@
 
     $(document).on('swipedown',function(){rotateDown();} );
     $(document).on('swipeup',function(){rotateUp();} );
-
+		
+		$('#sendEmailButton').click(function() {
+			var subject = "Personal email from " + $('#emailName').val();
+			var email = $('#emailAddress').val();
+			var content = $('#emailBody').val();
+			if(content == "" || email == "" || subject == "") {
+				$('#emailModal').children('div').children('p')
+					.html("Please fill in all fields.")
+					.css('color', '#EA2A2A')
+					.end().end()
+				.fadeIn(300);
+				$('#overlay').fadeIn(300);
+				return;
+			}
+			$.ajax({
+				type: "POST",
+				url: "https://mandrillapp.com/api/1.0/messages/send.json",
+				data: {
+					'key': 'U2CZxXsy1PtqfKQfAKl0Iw',
+					'message': {
+						'from_email': email,
+						'to': [{
+							'email': 'tolson.louis@gmail.com'
+						}],
+						'autotext': 'true',
+						'subject': subject,
+						'text': content
+					}
+				}
+			}).done(function(response) {
+				$('#emailModal').children('div').children('p')
+					.text("Your email has been sent! I will try to respond within a few days.")
+					.css('color', 'green')
+					.end().end()
+				.fadeIn(300);
+				$('#overlay').fadeIn(300);
+				$('#emailName').val('');
+				$('#emailAddress').val('');
+				$('#emailBody').val('');
+			}).fail(function() { 
+				$('#emailModal').children('div').children('p')
+					.html("Whoops! There seems to have been a problem with the SMTP server. </br>Please try again.")
+					.css('color', '#EA2A2A')
+					.end().end()
+				.fadeIn(300);
+				$('#overlay').fadeIn(300);
+			});
+		});
+		
+		$('#emailModal h3').click(function() {
+			$('#emailModal').fadeOut(300);
+			$('#overlay').fadeOut(300);
+		});
 
     window.addEventListener( 'DOMContentLoaded', init, false);
   </script>

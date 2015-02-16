@@ -70,6 +70,7 @@ function deletePost() {
 $('#closeModal').click(function() {
 	deletePost();
 	toggleAlertModal();
+	location.reload();
 });
 
 $('#submitButton').click(function() {
@@ -89,17 +90,16 @@ function toggleBlogModal() {
 //--------------BLOG LOAD FUNCTIONS--------------\\
 
 	var posts = [];	
-	var url = "http://tylerolson.us:2015/";
 
 	// Load JSON data
 	$(document).ready(function() {
 		var intro = '<div class="post">\n<figure>\n<img src="../blog/',
 				middle = '"></img>\n<figcaption class="unselectable">',
 				end = '</figcaption>\n</figure>\n</div>';
-		$.getJSON(url + "getposts", function(data) {
+		$.getJSON("../blog/getposts", function(data) {
 			$.each( data, function(key, val) {
 				posts.push(val);
-				$.getJSON(url + "getimages/" + val.id, function(images) {
+				$.getJSON("../blog/getimages/" + val.id, function(images) {
 					var friendlyImage = ('pictures/' + val.id + '/' + images[0].name);
 					$('.content').append($(intro + friendlyImage + middle + val.title + end));
 				});
