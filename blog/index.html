@@ -3,7 +3,7 @@
 <head>
 	<title>Fun times in Ecuador</title>
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="icon" href="blog/pictures/icon.png">
+	<link rel="icon" href="pictures/icon.png">
 	<link href='http://fonts.googleapis.com/css?family=Poiret+One|Oxygen:400,300,700' rel='stylesheet' type='text/css'>
 	<script type="text/javascript"> 
 		var ua=navigator.userAgent; 
@@ -84,7 +84,6 @@
 						imageHash[val.id] = imagesString;
 					}).done(function(data) {
     				postHTMLs.forEach(function(element, index, arr) {
-							console.log("lskjenfselksenf");
 							$(element).appendTo(".content");
 						});
 						tinysort('.content > div',{attr: 'id'});
@@ -92,7 +91,6 @@
 					loadedPicturesHash[val.id] = [];
 				});
 			});
-
 		});
 
 		// Toggle the post modal visibility

@@ -209,10 +209,6 @@ var allowCrossDomain = function(req, res, next) {
 };
 server.use(allowCrossDomain);
 
-server.get('/api', function (req, res, next) {
-	res.send('Our sample API is up...');
-});
-
 server.get('/newestPost', function (req, res, next) {
   // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -221,6 +217,8 @@ server.get('/newestPost', function (req, res, next) {
 	db.posts.find().sort({date: -1}).limit(1, function(err, posts) { // Query in MongoDB via Mongo JS Module
 		if( err || !posts) {
 			console.log("No posts found");
+			res.status(400).send();
+			next();
 		} else {
 			res.writeHead(200, {'Content-Type': 'application/json'}); // Sending data via json
 			str='[';
@@ -246,6 +244,8 @@ server.get('/blog/getposts', function (req, res, next) {
 	db.posts.find({}, function(err, posts) { // Query in MongoDB via Mongo JS Module
 		if( err || !posts) {
 			console.log("No posts found");
+			res.status(400).send();
+			next();
 		} else {
 			res.writeHead(200, {'Content-Type': 'application/json'}); // Sending data via json
 			str='[';
@@ -280,9 +280,10 @@ server.get('/blog/getimages/:dir', function (req, res, next) {
 		str += ']';
 		res.end(str);
 	});
+	next();
 });
 
-var port = 8080;
+var port = 80;
 server.listen(port, function() {
 	console.log('server listening on port ' + port);
 });
