@@ -92,7 +92,7 @@
   	<div class="info" id="blog">
     	<h2 style="text-align:left;">I'm currently in Ecuador!</h2>
     	<div class="paragraph">
-				<h4>Checkout my blog:</h4>
+				<h4 id="newestPost">Most recent post: </h4> 
 				<a href="./blog"><img src="images/screenshot.png" id="screenshot"></a>
 			</div>
 			<!--div id="blogData"></div-->
@@ -399,6 +399,17 @@
       setTimeout( function(){
         document.body.addClassName('ready');
       }, 0);
+
+			var newestPost = $('#newestPost');
+
+			$.get( "newestPost", function(data) {
+				$.each( data, function(key, val) {
+					newestPost.text(newestPost.text() + val.date);
+				});
+			})
+  		.fail(function() {
+    		newestPost.remove();
+  		});
 
     };
 
