@@ -230,7 +230,6 @@ server.get('/newestPost', function (req, res, next) {
 			str = str.trim();
 			str = str.substring(0, str.length-1);
 			str = str + ']';
-			console.log(str);
 			res.end( str );
 		}
 	});

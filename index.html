@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -50,7 +49,7 @@
   <!--HTML-->
 
 
-  <div style="padding-bottom: 20%"></div>
+  <div style="padding-bottom: 10%"></div>
 
   <section class="container">
     <div id="carousel">
@@ -214,7 +213,7 @@
       
       $(window).on('resize', function() {
 	      moveAmount = $(window).width()/2 - containerHalfWidth;
-        if(!container.hasClass('cornered')){
+        if(!container.hasClass('current')){
 		      container.css("left", moveAmount + "px");
         }
       });
@@ -260,12 +259,12 @@
 
       this.panelSize = this.element[ 'offsetHeight' ];
 
-      this.rotateFn = 'rotateX';
+      this.rotateFn = 'rotateY';
       this.theta = 360 / this.panelCount;
 
       // do some trig to figure out how big the carousel
       // is in 3D space
-      this.radius = 280;
+      this.radius = 400;
       
       for ( i = 0; i < this.panelCount; i++ ) {
         panel = this.element.children[i];
@@ -332,38 +331,22 @@
       } else if(currentArticleId == thisId) {
         var $container = $('.container');
         var color = getColorByNumber(parseInt($this.attr('id')));    
-        if( $container.hasClass('cornered')) {
-					if(canAnimate) {
-						canAnimate = false;
-          	$('.information').find('#' + $this.data('information')).fadeOut(300);
-          	setTimeout( function() {
-            	$container.animate({'left': '+=' + moveAmount + 'px', 'top': '+=37%'}, 500, function() {
-								canAnimate = true;
-							})
-           	  	.removeClass('cornered');
-           	 	// Change color manually since not handled by rotate function
-          	  $this.css('color', '#aaaaaa');
-          	}, 500);
-          	$this.siblings('.article').delay(500).show(300);
-					}
+        if( $container.hasClass('current')) {
+         	$('.information').find('#' + $this.data('information')).fadeOut(300);
+          $container.removeClass('current');
+         	// Change color manually since not handled by rotate function
+         	$this.css('color', '#aaaaaa');
         } else {
-					if(canAnimate) {
-						canAnimate = false;
-         		$container.animate({'left': '-=' + moveAmount + 'px', 'top': '-=37%'}, 500, function() {
-							canAnimate = true;
-						})
-       	  		.addClass('cornered');
-         		$this.css({"color": color});
-         		$this.siblings('.article').hide(300);
-         		$('.information').find('#' + $this.data('information')).hide().delay(500).fadeIn(500);
-						/*if(currentArticleId == 1) {
-							setTimeout(function() {
-								$("#blogData").load("./blog",function(){
-	 								$('#blogData').fadeIn(500);
-								});
-							}, 500);
-						}*/
-					}
+         	$container.addClass('current');
+         	$this.css({"color": color});
+         	$('.information').find('#' + $this.data('information')).fadeIn(500);
+					/*if(currentArticleId == 1) {
+						setTimeout(function() {
+							$("#blogData").load("./blog",function(){
+	 							$('#blogData').fadeIn(500);
+							});
+						}, 500);
+					}*/
         }
       } else if(currentArticleId > thisId){
         rotateUp();
@@ -376,7 +359,7 @@
 		// using on
 		$(document).on('mousewheel', function(e) {
       // cross-browser wheel delta
-      if(!$('.container').hasClass('cornered')) {
+      if(!$('.container').hasClass('current')) {
         if(e.deltaY > 0) {
           rotateDown();
         } else {

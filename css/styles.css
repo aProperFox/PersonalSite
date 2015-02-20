@@ -277,12 +277,11 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
 
 
 .container {
-  width: 50%;
-  height: 140px;
+  height: 100px;
   margin: auto auto 40px;
   text-align: center;
   border: solid #e3e3e3;
-  top: 37%;
+  top: 0px;
   width: 450px; 
   display: none;
   position: absolute;
@@ -291,7 +290,6 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
        -o-perspective: 1100px;
           perspective: 1100px;
 }
-
 
 #carousel {
   width: 100%;
@@ -321,9 +319,8 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
   display: block;
   position: absolute;
   width: 100%;
-  height: 116px;
-  top: 10px;
-  line-height: 116px;
+  height: 100px;
+  line-height: 100px;
   font-size: 80px;
   font-weight: bold;
   color: #dddddd;
@@ -344,8 +341,7 @@ code .nd { color: #9FAD7E; } /* CSS pseudo selector */
           transition: opacity .5s, transform .5s;
 }
     
-.cornered {
-  border: none;
+.current-post {
 }
 
 .article:nth-child(1):first-letter {
