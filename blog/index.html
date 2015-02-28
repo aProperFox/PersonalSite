@@ -4,7 +4,7 @@
 	<title>Fun times in Ecuador</title>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="icon" href="pictures/icon.png">
-	<link href='http://fonts.googleapis.com/css?family=Poiret+One|Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Antic|Oxygen' rel='stylesheet' type='text/css'>
 	<script type="text/javascript"> 
 		var ua=navigator.userAgent; 
 		if (ua.indexOf("Mobile")!=-1) window.location = "/mobile.html"; 
@@ -20,7 +20,20 @@
 <body>
 
 	<div class="title-bar">
-		<h1 class="center">MIS AVENTURAS EN EL ECUADOR</h1>
+		<h1 id="header">Mis Aventuras en el Ecuador</h1>
+	</div>
+
+	<div id="navbar_wrapper">
+		<div id="navbar">
+			<ul>
+				<li><a id="0" href="../?WELCOME" data-information="welcome">WELCOME</a></li> 
+				<li><a id="1" href="javascript:void(0)" data-information="blog">BLOG</a></li> 
+				<li><a id="2" href="../?EDUCATION" data-information="education">EDUCATION</a></li> 
+				<li><a id="3" href="../?PROJECTS" data-information="projects">PROJECTS</a></li> 
+				<li><a id="4" href="../?OCCUPATION" data-information="occupation">OCCUPATION</a></li> 
+				<li><a id="5" href="../?CONTACT" data-information="contact">CONTACT</a></li> 
+			</ul>   
+		</div>
 	</div>
 
 	<div class="overlay" id="modalOverlay"></div>
@@ -91,6 +104,14 @@
 					loadedPicturesHash[val.id] = [];
 				});
 			});
+
+			$this = $("a:contains(BLOG)");
+			$this.parent().addClass("current-post").hover(function() {
+				$(this).css("background-color", "#3b3b3b");
+			}, function() {
+				$(this).css("background", "transparent");
+			});
+     	$this.css({"color": "#ABBF87"});
 		});
 
 		// Toggle the post modal visibility
@@ -251,6 +272,34 @@
 			$('#pictureViewer').css("background-image", "none");
 			loadingPostIds.shift();
 		}
+
+		$(function() {
+		 
+			// grab the initial top offset of the navigation 
+			var sticky_navigation_offset_top = $('#navbar').offset().top;
+				 
+			// our function that decides weather the navigation bar should have "fixed" css position or not.
+			var sticky_navigation = function(){
+				var scroll_top = $(window).scrollTop(); // our current vertical position from the top
+						 
+				// if we've scrolled more than the navigation, change its position to fixed to stick to top,
+				// otherwise change it back to relative
+				if (scroll_top > sticky_navigation_offset_top) { 
+					$('#navbar').css({ 'position': 'fixed', 'top':0, 'left':0 });
+				} else {
+					$('#navbar').css({ 'position': 'relative', 'top': '10px' }); 
+				}   
+			};
+				 
+			// run our function on load
+			sticky_navigation();
+				 
+			// and run it again every time you scroll
+			$(window).scroll(function() {
+				sticky_navigation();
+			});
+		 
+		});
 
 	</script>
 

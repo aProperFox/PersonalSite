@@ -3,10 +3,26 @@ section, footer, nav {
 }
 
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Antic', sans-serif;
   -webkit-text-size-adjust: none;
   color: #333;
-	background-color: #3b3b3b;
+	background: transparent;
+}
+
+#bg {
+	position: fixed; 
+  top: 0; 
+  left: 0; 
+	right: 0;
+	bottom: 0;
+  width: 100%; 
+  height: 100%;
+	z-index: -1;
+}
+
+h2 {
+	font-size: 2.5em;
+  font-family: 'Oxygen', sans-serif;
 }
 
 a#linkedin img {
@@ -68,7 +84,7 @@ footer {
 #background {
 	position: absolute;
 	width: 69%;
-	margin-left: -34.5%;
+	margin-left: -34.6%;
 	left: 50%;
 	height: 250px;
   background:  #f8f8f8;
@@ -94,41 +110,30 @@ footer {
 	z-index: 2;
 }
 
+#headerBlock {
+	width: 50%;
+	text-align: center; 
+	display: inline-block;
+}
+
 #header h1 {
 	color: #515151;
 	font-size: 4em;
 	text-align: center;
-	display: inline-block;
-	float: left;
-	margin-left: .1em;
-}
-
-#disclaimer {
-  color: red;
-  font-weight: bold;
-  display: none;
-}
-.no-csstransforms3d #disclaimer { display: block; }
-
-hr {
-  border: none;
-  border-top: 1px solid #CCC;
-}
-
-code {
-  font-family: 'Monaco', 'Menlo', monospace;
 }
 
 .information {
   text-align: center;
   margin: auto;
-  width: 60%;
+  width: 70%;
   min-width: 600px;
 }
 
 .info {
   display: none;
   color: #dddddd;
+	background-color: #3b3b3b;
+	padding: 3%;
 }
 
 #scheme-toggle {
@@ -151,6 +156,13 @@ a:hover {
 .paragraph {
   text-align: left;
   display: block;
+	font-size: 1.5em;
+	font-family: 'Oxygen', sans-serif;
+}
+
+.project-list li {
+	font-size: 0.65em;
+	padding: 0.2em;
 }
 
 #screenshot {
@@ -162,17 +174,6 @@ a:hover {
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0,0,0,0.5);
-	top: 0px;
-	left: 0px;
-	z-index: 1;
-	display: none;
-}
-
-#whiteOverlay {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(200,200,200,0.5);
 	top: 0px;
 	left: 0px;
 	z-index: 1;
@@ -191,6 +192,9 @@ a:hover {
   z-index: 2;
   display: none;
   text-align: center;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
 }
 
 #emailModalText p {
@@ -207,7 +211,7 @@ a:hover {
 #emailModal h3 {
 	position: absolute;
 	top: 0px;
-	right: 10px;
+	right: 20px;
 	color: #515151;
 }
 
@@ -301,4 +305,63 @@ div#navbar ul a:hover {
 
 div#navbar a:visited {
 	color: #AAAAAA;
+}
+
+.form label, .form div {
+  display: block;
+  margin: 0px 0px 5px;
+}
+
+.form label>span, .form div>span {
+  float: left;
+  width: 20%;
+  text-align: right;
+  padding-right: 10px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.form input[type="text"], .form input[type="email"], .form textarea {
+  border: none;
+  color: #515151;
+  height: 25px;
+  line-height:15px;
+  margin-bottom: 16px;
+  margin-right: 6px;
+  margin-top: 2px;
+  outline: 0 none;
+  padding: 5px 0px 5px 5px;
+  width: 70%;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  background: #DFDFDF;
+}
+
+.form textarea{
+  height:100px;
+  padding: 5px 0px 0px 5px;
+  width: 70%;
+}
+
+.form .button {
+  background: #8D538E;
+  border: none;
+  padding: 10px 25px 10px 25px;
+  color: #b3b3b3;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  font-weight: bold;
+}
+
+#sendEmailButton:hover {
+  color: #333;
+  background: #EBEBEB;
+}
+
+#form {
+	width: 75%;
+	margin: auto;
 }
