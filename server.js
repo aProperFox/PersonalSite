@@ -10,6 +10,7 @@ var path = require('path');     //used for file path
 var fs = require('fs-extra');       //File System - for file manipulation
 var ObjectID = require('mongodb').ObjectID;
 var rmdir = require('rimraf');
+var swig = require('swig');
 
 var db = require('mongojs').connect('localhost/blog', ['posts']);
 var server = express();
@@ -230,7 +231,6 @@ server.get('/newestPost', function (req, res, next) {
 			str = str.trim();
 			str = str.substring(0, str.length-1);
 			str = str + ']';
-			console.log(str);
 			res.end( str );
 		}
 	});

@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,60 +12,44 @@
   <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css" />-->
   <link rel="stylesheet" href="css/styles.css" media="screen" />
   <link rel="stylesheet" href="css/jquery-ui.css"/>
+	<link href='http://fonts.googleapis.com/css?family=Antic|Oxygen' rel='stylesheet' type='text/css'>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-ui.min.js"></script>
   <script src="js/swipe.js"></script>
 </head>
 <body>
-
-  <input type="image" id="scheme-toggle" src="images/night.png" width="40" height="40">
-  <script>
-    function toggleNightAndDay(state) {
-      if(state == "night") {
-        $('body').css("background", "#3e3e3e");
-        $('.info').css("color", "#dddddd");
-        $('#scheme-toggle').attr('src', "images/night.png");
-      } else {
-        $('body').css("background", "#eeeeee");
-        $('.info').css("color", "#333333");
-        $('#scheme-toggle').attr('src', "images/day.png");
-      }
-    }
-   
-    toggleNightAndDay("night");
-
-    // Change color based on button
-    $('body').on('click', '#scheme-toggle', function() {
-      if($(this).attr('src') == "images/day.png") {
-        toggleNightAndDay("night");
-      } else {
-        toggleNightAndDay("day");
-      }
-    });
-  </script>
-
-
-  <!--HTML-->
-
-
-  <div style="padding-bottom: 20%"></div>
-
-  <section class="container">
-    <div id="carousel">
-      <h1 class="article" id="0" style="color: #aaaaaa" data-information="welcome">Welcome!</h1>
-      <h1 class="article" id="1" data-information="blog">Blog</h1>
-      <h1 class="article" id="2" data-information="projects">Projects</h1>
-      <h1 class="article" id="3" data-information="education">Education</h1>
-      <h1 class="article" id="4" data-information="occupation">Occupation</h1>
-      <h1 class="article" id="5" data-information="contact">Contact</h1>
-    </div>
-  </section>
+ <img id="bg" alt="">
+	<div id="background"></div>
+	<div id="header">
+		<div id="headerBlock">
+			<h1>Tyler Olson</h1>
+			<h3>Software Developer</h3> 
+		</div>
+		<div id="socialIcons">
+			<a id="github" href="https://github.com/olsontl"><img src="images/github.png"/></a>
+  		<a id="linkedin" href="https://www.linkedin.com/pub/tyler-olson/48/861/395"><img src="images/linkedin.png"/></a>
+ 			<a id="stackoverflow" href="http://stackoverflow.com/users/1094605/tyler-olson"><img src="images/stackoverflow.png"/></a>
+		</div>
+	</div>
+	<!--HTML-->
+	<div id="navbar_wrapper">
+		<div id="navbar">
+			<ul>
+				<li><a id="0" href="javascript:void(0)" data-information="welcome">WELCOME</a></li> 
+				<li><a id="1" href="/blog" data-information="blog">BLOG</a></li> 
+				<li><a id="2" href="javascript:void(0)" data-information="education">EDUCATION</a></li> 
+				<li><a id="3" href="javascript:void(0)" data-information="projects">PROJECTS</a></li> 
+				<li><a id="4" href="javascript:void(0)" data-information="occupation">OCCUPATION</a></li> 
+				<li><a id="5" href="javascript:void(0)" data-information="contact">CONTACT</a></li> 
+			</ul>   
+		</div>
+	</div>
 
   <section class="information">
   	<div class="info" id="welcome">
-    	<h2 style="text-align:left;"><font size="6">Who is Tyler Olson?</font></h2>
-    	<div class="paragraph"><font size="4">
+    	<h2 style="text-align:left;">Who is Tyler Olson?</h2>
+    	<div class="paragraph">
 				<h3>Work related</h3>
 	I am a Software Engineer with a Bachelor's degree in Computer Science from the University of Colorado at Boulder. I also have an interest in obtaining fluency in a foreign language and plan on living
 	in a foreign country to further broaden my Spanish speaking ability. <br /><br />In my freshman year at CU, I was drawn to mechanical engineering and pursued what potential careers it could 
@@ -85,17 +68,8 @@
 	music as a whole as I've always dreamed of being a musician. Another hobby I love is building/crafting things from wood. In High School I created a	3-Dimensional interactive board 
 	game based off of trivia from the book Siddhartha. My desire to build/create was largely influenced by  my Grandfather whom in his time was a high school shop teacher and always 
 	had fun making useful items and gifts from wood.<br />
-</font>
     	</div>
 
-  	</div>
-  	<div class="info" id="blog">
-    	<h2 style="text-align:left;">I'm currently in Ecuador!</h2>
-    	<div class="paragraph">
-				<h4 id="newestPost">Most recent post: </h4> 
-				<a href="./blog"><img src="images/screenshot.png" id="screenshot"></a>
-			</div>
-			<!--div id="blogData"></div-->
   	</div>
   	<div class="info" id="projects">
       <h2 style="text-align:left">Work in My Field of Study</h2>
@@ -103,9 +77,9 @@
 	Recently, I've been working towards designing, programming, and finishing a new project every month. I'm not binding myself to one technology, but I do have a great interest in
 	developing Android applications and have developed several apps that are currently on the Google play store. Here are some of the projects I've completed over the last few years:</br>
       <div class="paragraph">
-        <ul>
+        <ul class="project-list">
           <li>
-            <font size="3">Android Mastermind game (store listing <a href="https://play.google.com/store/apps/details?id=com.carridegames.mastermind">here</a>)
+            Android Mastermind game (store listing <a href="https://play.google.com/store/apps/details?id=com.carridegames.mastermind">here</a>)
           </li>
 	  			<li>
 	    			Android Dart Score Keeping app (store listing <a href="https://play.google.com/store/apps/details?id=games.ride.car.dartscorekeeper">here</a>)
@@ -125,21 +99,19 @@
          <li>
            This website, and my <a href="./blog">blog</a>
          </li>
-				</font>
        </ul>
      </div>
-	</br>
 	Currently I'm working on integrating new technologies into my Android apps such as API calls, an SQLite database for storing/accessing user stats, and potentially creating Chromecast
 	receiver applications to sync with.
       </div>
     </div>
     <div class="info" id="education">
       <h2 style="text-align:left;">
-        <font size="5">My Education</font>
+        My Education
       </h2>
       <div class="paragraph">
         <ul>
-          <li><font size="3">
+          <li>
             Bachelor of Science in Computer Science from CU Boulder, May 2014<br />
           </li>
           <li>
@@ -149,19 +121,18 @@
       </div>
 
       <h2 style="text-align:left;">
-        <font size="5">Programming Experience</font>
+        Programming Experience
       </h2>
       <div class="paragraph">
         <ul>
           <li>
-            <font size="3">Proficient in C++, C#, Java, Android, OOP, JS, HTML, CSS, MYSQL, Linux, Windows
+            Proficient in C++, C#, Java, Android, OOP, JS, HTML, CSS, MYSQL, Linux, Windows
           </li>
           <li>
             Understanding of Python, OpenGL, C, Ruby, Selenium Web-driver, Cucumber
           </li>
           <li>
             Basic knowledge of Assembly Code, Functional Programming languages
-            </font>
           </li>
         </ul>
       </div>
@@ -176,14 +147,27 @@
     </div>
     <div class="info" id="contact">
       <h2 style="text-align: left">Email me</h2>
-			<div style="text-align: left">
-      Name: <br>
-  	  <input type="text" name="name" class="form" id="emailName"><br>
-	  	Email: <br>
-      <input type="text" name="email" class="form" id="emailAddress"><br>
-	  	Message: <br>
-  	  <textarea  name="message" class="form" maxlength="1000" cols="75" rows="15" id="emailBody"></textarea><br>
-	  	<button id="sendEmailButton">Send</button>
+			<div style="text-align: left" id="form">
+				<form action="" method="post" class="form">
+				<p>
+      		<label>
+						<span>Your Name:</span>
+  	  			<input type="text" name="name" id="emailName">
+					</label>
+					<label>
+	  				<span>Your Email:</span>
+      			<input type="email" name="email" id="emailAddress">
+					</label>
+					<label>
+	  				<span>Message:</span>
+  	  			<textarea  name="message" id="emailBody"></textarea>
+					</label>
+					<div>
+						<span>&nbsp;</span>
+	  				<button id="sendEmailButton" type="button" class="button">Send</button>
+					</div>
+				</p>
+				</form>
 			<div id="overlay"></div>
 			<div id="emailModal">
 				<div id="emailModalText">
@@ -203,24 +187,37 @@
 	<script src="js/jquery.mousewheel.min.js"></script>
   <script>
 
-    var container, moveAmount, containerHalfWidth, currentArticleId;
+    var currentArticleId;
     $(document).ready(function() {
-      container = $('.container');
-			containerHalfWidth = container.width()/2;
-      moveAmount = $(window).width()/2 - containerHalfWidth;
+			var url = window.location.href;
+			var param = url.substr(url.indexOf("?") + 1)
+			showSection(param);
 			currentArticleId = 0;
-      container.css("left", moveAmount + "px");
-      container.show();
-      
-      $(window).on('resize', function() {
-	      moveAmount = $(window).width()/2 - containerHalfWidth;
-        if(!container.hasClass('cornered')){
-		      container.css("left", moveAmount + "px");
-        }
-      });
-
     });
 
+		function showSection(sectionName) {
+			if(sectionName == "WELCOME" || sectionName == "EDUCATION" || sectionName == "PROJECTS" || 
+					sectionName == "OCCUPATION" || sectionName == "CONTACT") {
+				$this = $("a:contains(" + sectionName + ")");
+				$this.parent().addClass("current-post").hover(function() {
+					$(this).css("background-color", "#3b3b3b");
+				}, function() {
+					$(this).css("background", "transparent");
+				});
+				$('.information').find('#' + $this.data('information')).fadeIn(300);
+      	var color = getColorByNumber(parseInt($this.attr('id')));    
+       	$this.css({"color": color});
+				$('img#bg').attr('src', 'images/back' + sectionName.toLowerCase() + '.jpg');
+			} else {
+				$('.information').find('#welcome').fadeIn(300);
+       	$('a:contains("WELCOME")').css({"color": "#BF8282"}).parent().addClass("current-post").hover(function() {
+					$(this).css("background-color", "#3b3b3b");
+				}, function() {
+					$(this).css("background", "transparent");
+				});
+				$('img#bg').attr('src', 'images/backwelcome.jpg');
+			}
+		}
 
     function getColorByNumber(number) {
       switch(number) {
@@ -240,199 +237,47 @@
           return null;
       }
     }
-
     
-    var transformProp = Modernizr.prefixed('transform');
-
-    function Carousel3D ( el ) {
-      this.element = el;
-
-      this.rotation = 0;
-      this.panelCount = 0;
-      this.totalPanelCount = this.element.children.length;
-      this.theta = 0;
-
-    }
-
-    Carousel3D.prototype.modify = function() {
-
-      var panel, angle, i;
-
-      this.panelSize = this.element[ 'offsetHeight' ];
-
-      this.rotateFn = 'rotateX';
-      this.theta = 360 / this.panelCount;
-
-      // do some trig to figure out how big the carousel
-      // is in 3D space
-      this.radius = 280;
-      
-      for ( i = 0; i < this.panelCount; i++ ) {
-        panel = this.element.children[i];
-        angle = this.theta * i;
-        panel.style.opacity = 1;
-        //panel.style.backgroundColor = 'hsla(' + angle + ', 100%, 50%, 0.8)';
-        // rotate panel, then push it out in 3D space
-        panel.style[ transformProp ] = this.rotateFn + '(' + angle + 'deg) translateZ(' + this.radius + 'px)';
-      }
-
-      // adjust rotation so panels are always flat
-      this.rotation = Math.round( this.rotation / this.theta ) * this.theta;
-
-      this.transform();
-
-    };
-
-    Carousel3D.prototype.transform = function() {
-      // push the carousel back in 3D space,
-      // and rotate it
-      this.element.style[ transformProp ] = 'translateZ(-' + this.radius + 'px) ' + this.rotateFn + '(' + this.rotation + 'deg)';
-    };
-    
-    var carousel;
-    var rotateUp = function() {
-      carousel.rotation += carousel.theta;
-      var selectedElement = $('#' + currentArticleId);
-      var currentId = parseInt(currentArticleId);
-      if ( currentId == 0 ) {
-        currentArticleId = '5';
-      } else {
-        currentId -= 1;
-        currentArticleId = currentId.toString();
-      }
-      $('#' + currentArticleId).css('color', '#aaaaaa');
-      selectedElement.css('color', '#dddddd');
-      carousel.modify();
-    }
-
-    var rotateDown = function() {
-      carousel.rotation -= carousel.theta;
-      var selectedElement = $('#' + currentArticleId);
-      var currentId = parseInt(currentArticleId);
-      if ( currentId == 5 ) {
-        currentArticleId = '0';
-      } else {
-        currentId += 1;
-        currentArticleId = currentId.toString();
-      }
-      $('#' + currentArticleId).css('color', '#aaaaaa');
-      selectedElement.css('color', '#dddddd');
-      carousel.modify();
-    }
-
-		var canAnimate = true;
-      
-    $('#carousel').on('click', '.article', function() { 	
+    $('#navbar').on('click', 'a', function() { 	
       $this = $(this);
       var thisId = $this.attr('id');
-      if (currentArticleId == '0' && thisId == '5') {
-        rotateUp();
-      } else if (thisId == '0' && currentArticleId == '5') { 
-        rotateDown();
-      } else if(currentArticleId == thisId) {
-        var $container = $('.container');
-        var color = getColorByNumber(parseInt($this.attr('id')));    
-        if( $container.hasClass('cornered')) {
-					if(canAnimate) {
-						canAnimate = false;
-          	$('.information').find('#' + $this.data('information')).fadeOut(300);
-          	setTimeout( function() {
-            	$container.animate({'left': '+=' + moveAmount + 'px', 'top': '+=37%'}, 500, function() {
-								canAnimate = true;
-							})
-           	  	.removeClass('cornered');
-           	 	// Change color manually since not handled by rotate function
-          	  $this.css('color', '#aaaaaa');
-          	}, 500);
-          	$this.siblings('.article').delay(500).show(300);
-					}
-        } else {
-					if(canAnimate) {
-						canAnimate = false;
-         		$container.animate({'left': '-=' + moveAmount + 'px', 'top': '-=37%'}, 500, function() {
-							canAnimate = true;
-						})
-       	  		.addClass('cornered');
-         		$this.css({"color": color});
-         		$this.siblings('.article').hide(300);
-         		$('.information').find('#' + $this.data('information')).hide().delay(500).fadeIn(500);
-						/*if(currentArticleId == 1) {
-							setTimeout(function() {
-								$("#blogData").load("./blog",function(){
-	 								$('#blogData').fadeIn(500);
-								});
-							}, 500);
-						}*/
-					}
-        }
-      } else if(currentArticleId > thisId){
-        rotateUp();
+      var color = getColorByNumber(parseInt($this.attr('id')));    
+      if( !$this.parent().hasClass('current-post')) {
+       	var current = $('.current-post');
+				current.removeClass('current-post');
+      	var oldColor = getColorByNumber(parseInt(current.children().attr('id')));    
+				current.hover(function() {
+          $(this).css('background-color', oldColor)
+						.children().css('color', '#f6f0cc');
+				}, function() {
+          $(this).css('background-color','transparent')
+						.children().css('color', '#AAAAAA');
+				});
+				current.children().css({"color": "#AAAAAA"});
+       	$('.information').find('#' + current.children().data('information')).slideUp(300);
+       	$('.information').find('#' + $this.data('information')).slideDown(300);
+       	$this.parent().addClass('current-post').hover(function() {
+    			$(this).css('background-color','#3b3b3b');
+       		$(this).children().css({"color": color});
+				}, function() {
+    			$(this).css('background','transparent');
+       		$(this).children().css({"color": color});
+				});
+				$('img#bg').attr('src', 'images/back' + $this.text().toLowerCase() + '.jpg');
+				$("html, body").animate({ scrollTop: 0 }, 500);
       } else {
-        rotateDown();
-      }
-      currentArticleId = thisId;
+				return false;
+			}
     });
 
-		// using on
-		$(document).on('mousewheel', function(e) {
-      // cross-browser wheel delta
-      if(!$('.container').hasClass('cornered')) {
-        if(e.deltaY > 0) {
-          rotateDown();
-        } else {
-          rotateUp();
-        }
-      }      
-		});
-
     var init = function() {
-
-
-      carousel = new Carousel3D( document.getElementById('carousel') );
-
-      // populate on startup
-      carousel.panelCount = $('body').find('.article').length,
-      carousel.modify();
-
-      carousel.element.toggleClassName('panels-backface-invisible');
 
       setTimeout( function(){
         document.body.addClassName('ready');
       }, 0);
 
-			var newestPost = $('#newestPost');
-
-			$.get( "newestPost", function(data) {
-				$.each( data, function(key, val) {
-					newestPost.text(newestPost.text() + val.date);
-				});
-			})
-  		.fail(function() {
-    		newestPost.remove();
-  		});
-
     };
 
-    // Handle key events
-
-    $(document).keydown(function(e) {
-    switch(e.which) {
-        case 38: // up
-        rotateDown();
-        break;
-
-        case 40: // down
-        rotateUp();
-        break;
-
-        default: return; // exit this handler for other keys
-    }
-    e.preventDefault(); // prevent the default action (scroll / move caret)
-    });
-
-    $(document).on('swipedown',function(){rotateDown();} );
-    $(document).on('swipeup',function(){rotateUp();} );
-		
 		$('#sendEmailButton').click(function() {
 			var subject = "Personal email from " + $('#emailName').val();
 			var email = $('#emailAddress').val();
@@ -486,7 +331,41 @@
 			$('#overlay').fadeOut(300);
 		});
 
+		$("li.current-post").hover(function() {
+  		$(this).css("background-color","#f6f0cc")
+			console.log("npiilse");
+		});
+
     window.addEventListener( 'DOMContentLoaded', init, false);
+
+		$(function() {
+		 
+			// grab the initial top offset of the navigation 
+			var sticky_navigation_offset_top = $('#navbar').offset().top;
+				 
+			// our function that decides weather the navigation bar should have "fixed" css position or not.
+			var sticky_navigation = function(){
+				var scroll_top = $(window).scrollTop(); // our current vertical position from the top
+						 
+				// if we've scrolled more than the navigation, change its position to fixed to stick to top,
+				// otherwise change it back to relative
+				if (scroll_top > sticky_navigation_offset_top) { 
+					$('#navbar').css({ 'position': 'fixed', 'top':0, 'left':0 });
+				} else {
+					$('#navbar').css({ 'position': 'relative', 'top': '10px' }); 
+				}   
+			};
+				 
+			// run our function on load
+			sticky_navigation();
+				 
+			// and run it again every time you scroll
+			$(window).scroll(function() {
+				sticky_navigation();
+			});
+		 
+		});
+
   </script>
 
 
