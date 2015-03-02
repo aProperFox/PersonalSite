@@ -424,3 +424,8 @@ div#navbar a:visited {
 #prevImage:hover, #nextImage:hover {
 	cursor: pointer;
 }
+
+#controlDiv {
+	width: 100%;
+	height: 100%;
+}
