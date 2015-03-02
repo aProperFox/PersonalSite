@@ -1,6 +1,6 @@
 body {
   font-family: 'Antic', sans-serif;
-	background-image: url("/blog/pictures/background.png");  
+	background-image: url("/blog/pictures/background.jpg");  
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
   background-attachment: fixed;
@@ -401,4 +401,26 @@ div#navbar a:visited {
 	vertical-align: middle;
 	margin-top: 0px;
 	margin-bottom: 0px;
+}
+
+#prevImage {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	margin-top: 15px;
+	top: 50%;
+	left: 20px;
+}
+
+#nextImage {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	margin-top: 15px;
+	top: 50%;
+	right: 20px;
+}
+
+#prevImage:hover, #nextImage:hover {
+	cursor: pointer;
 }
