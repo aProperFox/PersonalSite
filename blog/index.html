@@ -51,13 +51,13 @@
 	<div class="overlay" id="pictureOverlay"></div>
 	<div id="pictureViewer">
 		<h1 class="close-button" id="imageViewerClose"><b>X</b></h1>
-		<div id="leftPictureArea"></div>
-		<div id="rightPictureArea"></div>
-		<div id="imageCaption">
+		<img id="prevImage" src="pictures/prevImage.png"/>
+		<img id="nextImage" src="pictures/nextImage.png"/>
+		<!--div id="imageCaption">
 			<p>
 				This is a caption. Imagine that!
 			</p>
-		</div>
+		</div-->
 	</div>
 	<div class="content">
 	</div>
@@ -214,12 +214,12 @@
 		}
 
 		// Next image
-		$('#rightPictureArea').click(function() {
+		$('#nextImage').click(function() {
 			switchImage(true);
 		});
 
 		// Previous image
-		$('#leftPictureArea').click(function() {
+		$('#prevImage').click(function() {
 			switchImage(false);
 		});
 
