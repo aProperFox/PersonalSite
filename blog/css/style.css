@@ -18,6 +18,10 @@ a {
 	text-decoration: none;
 }
 
+ul {
+	list-style-type: none;
+}
+
 a:link {
 	color: #5078A1;
 }
@@ -137,7 +141,7 @@ div.post:hover figure h5 {
 .content {
 	color: #3b3b3b;
 	height: 100%;
-	width: auto;
+	width: 70%;
 	margin: auto;
 	text-align: center;
 	padding: 10px;
@@ -220,7 +224,6 @@ div.post-text {
 
 #pictureViewer {
   background-color: rgb(10,10,10);
-	background-image: url("../pictures/loader.gif");
 	background-repeat: no-repeat;
   background-position: center;
   display: block;
@@ -240,6 +243,11 @@ div.post-text {
 	left: 50%;
 	top: 50%;
   transform: translate(-50%,-50%);
+}
+
+#pictureSlide {
+	width: 100%;
+	height: 100%;
 }
 
 #imageCaption {
@@ -288,6 +296,7 @@ div.post-text {
 	position: absolute;
 	top: -10px;
 	right: 20px;
+	z-index: 2;
 }
 
 h1.close-button {
@@ -313,6 +322,7 @@ h1.close-button {
 
 div#navbar {
   background: #515151;
+	position: relative;
   width: 70%;
   top: 10px;
   left:0;
@@ -407,18 +417,20 @@ div#navbar a:visited {
 	position: absolute;
 	width: 30px;
 	height: 30px;
-	margin-top: 15px;
+	margin-top: -26px;
 	top: 50%;
 	left: 20px;
+	z-index: 3;
 }
 
 #nextImage {
-	position: absolute;
 	width: 30px;
 	height: 30px;
-	margin-top: 15px;
+	position: absolute;
+	margin-top: -26px;
 	top: 50%;
 	right: 20px;
+	z-index: 3;
 }
 
 #prevImage:hover, #nextImage:hover {

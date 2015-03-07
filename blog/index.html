@@ -5,17 +5,17 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="icon" href="pictures/icon.png">
 	<link href='http://fonts.googleapis.com/css?family=Antic|Oxygen' rel='stylesheet' type='text/css'>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	<script src="js/preloadjs-0.6.0.min.js"></script>
+	<script src="js/tinysort.min.js"></script>
 	<script type="text/javascript"> 
 		var ua=navigator.userAgent; 
 		if (ua.indexOf("Mobile")!=-1) window.location = "/mobile.html"; 
 		if (ua.indexOf("iPad")!=-1) window.location = "/mobile.html";
 		if (ua.indexOf("iPhone")!=-1) window.location = "/mobile.html";
 	</script> 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-	<script src="js/preloadjs-0.6.0.min.js"></script>
-	<script src="js/tinysort.min.js"></script>
 </head>
 <body>
 
@@ -55,6 +55,7 @@
 			<img id="prevImage" src="pictures/prevImage.png"/>
 			<img id="nextImage" src="pictures/nextImage.png"/>
 		</div>
+		<div id="pictures"></div>
 		<!--div id="imageCaption">
 			<p>
 				This is a caption. Imagine that!
@@ -91,7 +92,7 @@
 					var divID = val.date;
 					$.getJSON("getimages/" + val.id, function(images) {
 						var friendlyImage = ('pictures/' + val.id + '/' + images[0].name);
-						postHTMLs.push($.parseHTML(intro + divID + second + friendlyImage + middle + val.title + end));
+						postHTMLs.push($.parseHTML(intro + divID + second + friendlyImage + middle + val.title + "</br><font size='2'>" + val.friendlyDate + "</font>" + end));
 						var imagesString = [];
 						images.forEach(function(element, index, arr) {
 							imagesString.push(element.name);
@@ -124,11 +125,12 @@
 		
 		// Display the modal when clicking a post. Load the data from database.
 		$(document).on('click', '.post', function() {
+			$('#images-' + currentPostId).hide();
+			$('.currentImage').removeClass('currentImage');
 			var scrollTop = $(document).scrollTop() + 20;
 			var imageSource = $(this).find('img').attr('src');
 			$('.modal').find('img').attr('src', imageSource);
 			$('.modal').css("top", scrollTop + "px");
-			$('#post-title').text($(this).find('figcaption').text());
 			var postText, postDate;
 			var BreakException= {};
 			try {
@@ -136,6 +138,7 @@
 					if(element.id.indexOf(imageSource.substring(9,33)) != -1) {
 						$('#postContent').empty().append($.parseHTML(element.text));
 						$('#post-date').text(element.friendlyDate);
+						$('#post-title').text(element.title);
 						currentPostId = element.id;
 						currentImageArray = imageHash[element.id];
 						throw BreakException;
@@ -151,6 +154,9 @@
 				loadImages(currentPostId);
 				loadedPosts.push(currentPostId);
 			}
+			var imagesList = $('#images-' + currentPostId);
+			imagesList.children(':first').addClass('currentImage');
+			imagesList.show();
 		});
 
 		// Close the modal when clicking outside its bounds
@@ -188,30 +194,33 @@
 		// Change image
 		function switchImage(isPositive) {
 			var $fspic = $('img.currentImage');
-			if(isPositive) {
-				if($fspic.parent().children("img:last").attr('src') == $fspic.attr('src')) {
-					$fspic.parent().children("img:first")
-						.fadeIn()
-						.addClass('currentImage');
+			console.log($fspic.parent().children().length);
+			if($fspic.parent().children().length > 1) {
+				if(isPositive) {
+					if($fspic.parent().children("img:last").attr('src') == $fspic.attr('src')) {
+						$fspic.parent().children("img:first")
+							.fadeIn()
+							.addClass('currentImage');
+					} else {
+						$fspic.next()
+							.fadeIn()
+							.addClass('currentImage');
+					}
+					$fspic.fadeOut().removeClass("currentImage");
 				} else {
-					$fspic.next()
-						.fadeIn()
-						.addClass('currentImage');
+					if($fspic.parent().children("img:first").attr('src') == $fspic.attr('src')) {
+						$fspic.parent().children("img:last")
+							.fadeIn(300)
+							.addClass('currentImage');
+					} else if(imageHash[currentPostId].length == 1) {
+						$fspic.fadeIn();
+					} else {
+						$fspic.prev()
+							.fadeIn()
+							.addClass('currentImage');
+					}
+					$fspic.fadeOut().removeClass("currentImage");
 				}
-				$fspic.fadeOut().removeClass("currentImage");
-			} else {
-				if($fspic.parent().children("img:first").attr('src') == $fspic.attr('src')) {
-					$fspic.parent().children("img:last")
-						.fadeIn(300)
-						.addClass('currentImage');
-				} else if(imageHash[currentPostId].length == 1) {
-					$fspic.fadeIn();
-				} else {
-					$fspic.prev()
-						.fadeIn()
-						.addClass('currentImage');
-				}
-				$fspic.fadeOut().removeClass("currentImage");
 			}
 		}
 
@@ -243,7 +252,7 @@
 		});
 
 		function loadImages(folder) {
-			$('#pictureViewer').css("background-image", "url(pictures/loader.gif')");
+			$('<ul id="images-' + folder + '"></ul>').appendTo('#pictures');
   		var preload = new createjs.LoadQueue();
  	 		preload.addEventListener("fileload", handleFileComplete);
 			for (var i = 0; i < currentImageArray.length; i++) {
@@ -266,12 +275,11 @@
 			} else {
 				jitem.css('display', 'none');
 			}
-			jitem.prependTo('#pictureViewer');
+			jitem.prependTo('#images-' + currentPostId);
 			console.log("file " + jitem.attr('src')  + "  loaded");
 		}
 
 		function handleComplete(event) {
-			$('#pictureViewer').css("background-image", "none");
 			loadingPostIds.shift();
 		}
 
