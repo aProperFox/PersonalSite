@@ -191,6 +191,7 @@ server.del('/poster/delete/:id', auth, function(req, res, next) {
 
 });
 
+
 /**************BLOG APIs**************/
 
 server.use(express.static(__dirname));
@@ -270,7 +271,10 @@ server.get('/blog/getposts', function (req, res, next) {
 server.get('/blog/getimages/:dir', function (req, res, next) {
 	res.writeHead(200, {'Content-Type': 'application/json'}); // Sending data via json
 	fs.readdir("./blog/pictures/" + req.params.dir, function (err, files) {
- 	 if (err) throw err;
+ 	if (err) {
+		console.log("error in getimages");
+		throw err;
+	}
 		str = '[';
 		files.forEach(function(element, index, arr) {
 			str += '{ "name": "' + element + '"},\n'
@@ -283,7 +287,7 @@ server.get('/blog/getimages/:dir', function (req, res, next) {
 	next();
 });
 
-var port = 80;
+var port = 8080;
 server.listen(port, function() {
 	console.log('server listening on port ' + port);
 });
