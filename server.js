@@ -268,6 +268,37 @@ server.get('/blog/getposts', function (req, res, next) {
 	});
 });
 
+server.get('/blog/getpost/:id', function (req, res, next) {
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+	db.posts.find({_id: ObjectID(req.params.id)}, function(err, posts) { // Query in MongoDB via Mongo JS Module
+		if( err || !posts) {
+			console.log("No posts found");
+			res.status(400).send();
+			next();
+		} else {
+			res.writeHead(200, {'Content-Type': 'application/json'}); // Sending data via json
+			str='[';
+			posts.forEach( function(post) {
+				var date = post.date;
+				str = str + '{ "title" : "' + post.title + 
+					'", "friendlyDate": "' + (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear()  +
+					'", "date": "' + date.getTime() +
+					'", "text": "' + post.text + 
+					'", "id": "' + post._id +
+					'"},' + '\n';
+			});
+			str = str.trim();
+			str = str.substring(0, str.length-1);
+			str = str + ']';
+			res.end( str );
+				// prepared the JSON array here
+		}
+	});
+});
+
 server.get('/blog/getimages/:dir', function (req, res, next) {
 	res.writeHead(200, {'Content-Type': 'application/json'}); // Sending data via json
 	fs.readdir("./blog/pictures/" + req.params.dir, function (err, files) {
