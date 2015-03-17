@@ -5,10 +5,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="icon" href="pictures/icon.png">
 	<link href='http://fonts.googleapis.com/css?family=Antic|Oxygen' rel='stylesheet' type='text/css'>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-	<script src="js/preloadjs-0.6.0.min.js"></script>
+	<script src="../js/jquery.min.js"></script>
 	<script src="js/tinysort.min.js"></script>
 	<script type="text/javascript"> 
 		var ua=navigator.userAgent; 
@@ -23,7 +20,7 @@
 		<h1 id="header">Mis Aventuras en el Ecuador</h1>
 	</div>
 
-	<div id="navbar_wrapper">
+	<nav>
 		<div id="navbar">
 			<ul>
 				<li><a id="0" href="../?WELCOME" data-information="welcome">WELCOME</a></li> 
@@ -34,34 +31,8 @@
 				<li><a id="5" href="../?CONTACT" data-information="contact">CONTACT</a></li> 
 			</ul>   
 		</div>
-	</div>
+	</nav>
 
-	<div class="overlay" id="modalOverlay"></div>
-	<div class="modal">
-		<h1 class="close-button" id="post-close"><b>X</b></h1>
-		<div id="post-image">
-			<img>
-		</div>
-		<div class="post-text">
-			<h2 id="post-title"></h2>
-			<h4 id="post-date"></h4>
-			<p id="postContent"></p>
-		</div>
-	</div>
-	<div class="overlay" id="pictureOverlay"></div>
-	<div id="pictureViewer">
-		<h1 class="close-button" id="imageViewerClose"><b>X</b></h1>
-		<div id="controlDiv">
-			<img id="prevImage" src="pictures/prevImage.png"/>
-			<img id="nextImage" src="pictures/nextImage.png"/>
-		</div>
-		<div id="pictures"></div>
-		<!--div id="imageCaption">
-			<p>
-				This is a caption. Imagine that!
-			</p>
-		</div-->
-	</div>
 	<div class="content">
 	</div>
 
@@ -125,163 +96,9 @@
 		
 		// Display the modal when clicking a post. Load the data from database.
 		$(document).on('click', '.post', function() {
-			$('#images-' + currentPostId).hide();
-			$('.currentImage').removeClass('currentImage');
-			var scrollTop = $(document).scrollTop() + 20;
-			var imageSource = $(this).find('img').attr('src');
-			$('.modal').find('img').attr('src', imageSource);
-			$('.modal').css("top", scrollTop + "px");
-			var postText, postDate;
-			var BreakException= {};
-			try {
-				posts.forEach(function(element, index, arr) {
-					if(element.id.indexOf(imageSource.substring(9,33)) != -1) {
-						$('#postContent').empty().append($.parseHTML(element.text));
-						$('#post-date').text(element.friendlyDate);
-						$('#post-title').text(element.title);
-						currentPostId = element.id;
-						currentImageArray = imageHash[element.id];
-						throw BreakException;
-					}
-				});
-			} catch(e) {
-    		if (e!==BreakException) throw e;
-			}
-			toggleModal();
-			isFirstImage = true;
-			if($.inArray(currentPostId, loadedPosts) == -1) {
-				loadingPostIds.push(currentPostId);
-				loadImages(currentPostId);
-				loadedPosts.push(currentPostId);
-			}
-			var imagesList = $('#images-' + currentPostId);
-			imagesList.children(':first').addClass('currentImage');
-			imagesList.show();
+			var postId = $(this).find('img').attr('src').substring(9,33);
+			location.href="./post.html?post=" + postId;
 		});
-
-		// Close the modal when clicking outside its bounds
-		$('#modalOverlay').click(function() {
-			toggleModal();
-		});
-		
-		// Close the modal when clicking the 'X'
-		$('#post-close').click(function() {
-			toggleModal();
-		});
-
-		// Toggle image viewer visibility
-		function togglePictureViewer() {
-			$('#pictureOverlay').fadeToggle(300);
-      $('#pictureViewer').fadeToggle(300);
-		};
-
-		// Hide image viewer
-		$('#pictureOverlay').click( function() {
-			togglePictureViewer();
-		});	
-
-		// Display image viewer
-		$('#post-image img').click(function() {
-			$('#fullScreenPicture').attr('src', $(this).attr('src'));
-			togglePictureViewer();
-		});
-
-		// Close the image viewer
-		$('#imageViewerClose').click(function() {
-			togglePictureViewer();
-		});
-
-		// Change image
-		function switchImage(isPositive) {
-			var $fspic = $('img.currentImage');
-			console.log($fspic.parent().children().length);
-			if($fspic.parent().children().length > 1) {
-				if(isPositive) {
-					if($fspic.parent().children("img:last").attr('src') == $fspic.attr('src')) {
-						$fspic.parent().children("img:first")
-							.fadeIn()
-							.addClass('currentImage');
-					} else {
-						$fspic.next()
-							.fadeIn()
-							.addClass('currentImage');
-					}
-					$fspic.fadeOut().removeClass("currentImage");
-				} else {
-					if($fspic.parent().children("img:first").attr('src') == $fspic.attr('src')) {
-						$fspic.parent().children("img:last")
-							.fadeIn(300)
-							.addClass('currentImage');
-					} else if(imageHash[currentPostId].length == 1) {
-						$fspic.fadeIn();
-					} else {
-						$fspic.prev()
-							.fadeIn()
-							.addClass('currentImage');
-					}
-					$fspic.fadeOut().removeClass("currentImage");
-				}
-			}
-		}
-
-		// Next image
-		$('#nextImage').click(function() {
-			switchImage(true);
-		});
-
-		// Previous image
-		$('#prevImage').click(function() {
-			switchImage(false);
-		});
-
-		$(document).keydown(function( event ) {
-			if($('#pictureViewer').is(":visible")) {
-				if(event.which == 37) {
-					switchImage(false);
-				} else if(event.which == 39) {
-					switchImage(true);
-				} else if(event.which == 27) {
-					togglePictureViewer();
-				}
-			} else if($('.modal').is(":visible")) {
-				if(event.which == 27) {
-					toggleModal();
-				}
-
-			}
-		});
-
-		function loadImages(folder) {
-			$('<ul id="images-' + folder + '"></ul>').appendTo('#pictures');
-  		var preload = new createjs.LoadQueue();
- 	 		preload.addEventListener("fileload", handleFileComplete);
-			for (var i = 0; i < currentImageArray.length; i++) {
-				var imageString = "pictures/" + folder + "/" + currentImageArray[i];
-	  		preload.loadFile({
-					src:imageString
-				});
-			}
-			preload.on("complete", handleComplete, this);
-		}
-
-		function handleFileComplete(event) {
-			var item = event.result;
-			var jitem = $(item);
-			jitem.addClass("full-screen-picture");
-			loadedPicturesHash[loadingPostIds[0]].push(jitem);
-			if(isFirstImage) {
-				jitem.addClass("currentImage");
-				isFirstImage = false;
-			} else {
-				jitem.css('display', 'none');
-			}
-			jitem.prependTo('#images-' + currentPostId);
-			console.log("file " + jitem.attr('src')  + "  loaded");
-		}
-
-		function handleComplete(event) {
-			loadingPostIds.shift();
-		}
 
 		$(function() {
 		 

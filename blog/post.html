@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="icon" href="pictures/icon.png">
+	<link href='http://fonts.googleapis.com/css?family=Antic|Oxygen' rel='stylesheet' type='text/css'>
+	<script src="../js/jquery.min.js"></script>
+	<script src="js/tinysort.min.js"></script>
+	<script type="text/javascript">
+	</script>
+	<script type="text/javascript"> 
+		var ua=navigator.userAgent; 
+		if (ua.indexOf("Mobile")!=-1) window.location = "/mobile.html"; 
+		if (ua.indexOf("iPad")!=-1) window.location = "/mobile.html";
+		if (ua.indexOf("iPhone")!=-1) window.location = "/mobile.html";
+	</script> 
+</head>
+<body id="postBody">
+
+	<div class="title-bar">
+		<h1 id="header">Mis Aventuras en el Ecuador</h1>
+	</div>
+
+	<nav>
+		<div id="navbar">
+			<ul>
+				<li><a id="0" href="../?WELCOME" data-information="welcome">WELCOME</a></li> 
+				<li><a id="1" href="./index.html" data-information="blog">BLOG</a>
+					<ul class="post-titles">
+					</ul>
+				</li> 
+				<li><a id="2" href="../?EDUCATION" data-information="education">EDUCATION</a></li> 
+				<li><a id="3" href="../?PROJECTS" data-information="projects">PROJECTS</a></li> 
+				<li><a id="4" href="../?OCCUPATION" data-information="occupation">OCCUPATION</a></li> 
+				<li><a id="5" href="../?CONTACT" data-information="contact">CONTACT</a></li> 
+			</ul>   
+		</div>
+	</nav>
+
+	<div class="modal">
+		<div id="post-image">
+			<img>
+			<h4>^^Click the above photo to see more!^^</h4>
+		</div>
+		<div class="post-text">
+			<h2 id="post-title"></h2>
+			<h4 id="post-date"></h4>
+			<p id="postContent"></p>
+		</div>
+	</div>
+	<div class="overlay" id="pictureOverlay"></div>
+	<div id="pictureViewer">
+		<h1 class="close-button" id="imageViewerClose"><b>X</b></h1>
+		<div id="controlDiv">
+			<img id="prevImage" src="pictures/prevImage.png"/>
+			<img id="nextImage" src="pictures/nextImage.png"/>
+		</div>
+		<div id="pictures"></div>
+		<!--div id="imageCaption">
+			<p>
+				This is a caption. Imagine that!
+			</p>
+		</div-->
+	</div>
+
+	<div class="footer-bar">
+		<h1 class="center"></h1>
+	</div>
+
+	<script type="text/javascript">
+		var post;	
+		var postHTML;
+	 	var imageCount = 0;
+		var postId = '';
+		var isFirstImage = true;
+
+		// Load JSON data
+		$(document).ready(function() {
+
+			$('#navbar li ul').hide();
+			$('#navbar li').hover(
+  			function () {
+    			$('ul', this).stop().slideDown(100);
+  			},
+  			function () {
+    			$('ul', this).stop().slideUp(100);
+  			}
+			);
+
+			var url = window.location.href;
+			postId = url.substr(url.indexOf("=") + 1)
+			var intro = '<div class="post">\n<figure>\n<img src="',
+					middle = '"></img>\n<figcaption class="unselectable">',
+					end = '</figcaption>\n</figure>\n</div>';
+			var mainImageSrc;
+			$.getJSON("getpost/" + postId, function(data) {
+				$.each( data, function(key, val) {
+					post = val;
+					$.getJSON("getimages/" + postId, function(images) {
+						var friendlyImage = ('pictures/' + postId + '/' + images[0].name);
+						mainImageSrc = friendlyImage;
+						postHTML = $.parseHTML(intro + friendlyImage + middle + val.title + "</br><font size='2'>" + val.friendlyDate + "</font>" + end);
+						images.forEach(function(element, index, arr) {
+							var jimage = $('<img src="pictures/' + postId + '/' + element.name + '"/>');
+							if(index == 0) {
+								jimage.addClass('currentImage');
+							} else {
+								jimage.css('display', 'none');
+							}
+							jimage.addClass('full-screen-picture');
+							jimage.appendTo('#pictures'); 
+							imageCount++;
+							//imageStrings.push(element.name);
+						});
+					}).done(function(data) {
+						$('#postContent').empty().append($.parseHTML(post.text));
+						$('#post-date').text(post.friendlyDate);
+						$('#post-title').text(post.title);
+						$('.modal').find('img').attr('src', mainImageSrc);
+					});
+				});
+			});
+			
+			$.getJSON("getposts/", function(data) {
+				$.each(data, function(key, val) {
+					var divID = val.date;
+					$('<li id="' + divID + '"><a href="./post.html?post=' + val.id + '">' + val.title + '</a></li>').appendTo('.post-titles');
+				})
+			}).done(function(data) {
+				tinysort('.post-titles > li',{attr: 'id'});
+			});
+
+		});
+
+		// Toggle image viewer visibility
+		function togglePictureViewer() {
+			$('#pictureOverlay').fadeToggle(300);
+      $('#pictureViewer').fadeToggle(300);
+		};
+
+		// Hide image viewer
+		$('#pictureOverlay').click( function() {
+			togglePictureViewer();
+		});	
+
+		// Display image viewer
+		$('#post-image img').click(function() {
+			$('#fullScreenPicture').attr('src', $(this).attr('src'));
+			togglePictureViewer();
+		});
+
+		// Close the image viewer
+		$('#imageViewerClose').click(function() {
+			togglePictureViewer();
+		});
+
+		// Change image
+		function switchImage(isPositive) {
+			var $fspic = $('img.currentImage');
+			if(imageCount > 1) {
+				if(isPositive) {
+					if($fspic.parent().children("img:last").attr('src') == $fspic.attr('src')) {
+						$fspic.parent().children("img:first")
+							.fadeIn()
+							.addClass('currentImage');
+					} else {
+						$fspic.next()
+							.fadeIn()
+							.addClass('currentImage');
+					}
+					$fspic.fadeOut().removeClass("currentImage");
+				} else {
+					if($fspic.parent().children("img:first").attr('src') == $fspic.attr('src')) {
+						$fspic.parent().children("img:last")
+							.fadeIn(300)
+							.addClass('currentImage');
+					} else if(imageCount == 1) {
+						$fspic.fadeIn();
+					} else {
+						$fspic.prev()
+							.fadeIn()
+							.addClass('currentImage');
+					}
+					$fspic.fadeOut().removeClass("currentImage");
+				}
+			}
+		}
+
+		// Next image
+		$('#nextImage').click(function() {
+			switchImage(true);
+		});
+
+		// Previous image
+		$('#prevImage').click(function() {
+			switchImage(false);
+		});
+
+		$(document).keydown(function( event ) {
+			if($('#pictureViewer').is(":visible")) {
+				if(event.which == 37) {
+					switchImage(false);
+				} else if(event.which == 39) {
+					switchImage(true);
+				} else if(event.which == 27) {
+					togglePictureViewer();
+				}
+			}
+		});
+
+		$(function() {
+		 
+			// grab the initial top offset of the navigation 
+			var sticky_navigation_offset_top = $('#navbar').offset().top;
+				 
+			// our function that decides weather the navigation bar should have "fixed" css position or not.
+			var sticky_navigation = function(){
+				var scroll_top = $(window).scrollTop(); // our current vertical position from the top
+						 
+				// if we've scrolled more than the navigation, change its position to fixed to stick to top,
+				// otherwise change it back to relative
+				if (scroll_top > sticky_navigation_offset_top) { 
+					$('#navbar').css({ 'position': 'fixed', 'top':0, 'left':0 });
+				} else {
+					$('#navbar').css({ 'position': 'relative', 'top': '10px' }); 
+				}   
+			};
+				 
+			// run our function on load
+			sticky_navigation();
+				 
+			// and run it again every time you scroll
+			$(window).scroll(function() {
+				sticky_navigation();
+			});
+		 
+		});
+
+	</script>
+
+</body>
+</html>
