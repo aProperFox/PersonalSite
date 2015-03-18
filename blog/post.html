@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" href="css/style.css">
+	<link id="style" rel="stylesheet" href="css/style.css">
 	<link rel="icon" href="pictures/icon.png">
 	<link href='http://fonts.googleapis.com/css?family=Antic|Oxygen' rel='stylesheet' type='text/css'>
 	<script src="../js/jquery.min.js"></script>
@@ -11,9 +11,9 @@
 	</script>
 	<script type="text/javascript"> 
 		var ua=navigator.userAgent; 
-		if (ua.indexOf("Mobile")!=-1) window.location = "/mobile.html"; 
-		if (ua.indexOf("iPad")!=-1) window.location = "/mobile.html";
-		if (ua.indexOf("iPhone")!=-1) window.location = "/mobile.html";
+		if (ua.indexOf("Mobile")!=-1) $('#style').attr('href', 'css/mobile.css'); 
+		if (ua.indexOf("iPad")!=-1) $('#style').attr('href', 'css/mobile.css'); 
+		if (ua.indexOf("iPhone")!=-1) $('#style').attr('href', 'css/mobile.css'); 
 	</script> 
 </head>
 <body id="postBody">
