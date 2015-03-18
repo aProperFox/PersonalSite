@@ -125,10 +125,13 @@
 			$.getJSON("getposts/", function(data) {
 				$.each(data, function(key, val) {
 					var divID = val.date;
-					$('<li id="' + divID + '"><a href="./post.html?post=' + val.id + '">' + val.title + '</a></li>').appendTo('.post-titles');
+					var linkId = "";
+					if(val.id == postId) linkId = "current-post";
+					$('<li id="' + divID + '"><a id="' + linkId +  '" href="./post.html?post=' + val.id + '">' + val.title + '</a></li>').appendTo('.post-titles');
 				})
 			}).done(function(data) {
 				tinysort('.post-titles > li',{attr: 'id'});
+				$('a#current-post').attr('href', 'javascript:void(0);');
 			});
 
 		});

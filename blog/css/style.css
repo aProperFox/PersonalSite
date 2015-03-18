@@ -471,3 +471,11 @@ div#navbar a:visited {
 #postBody {
 	background-image: url("/blog/pictures/postBackground.jpg");  
 }
+
+#current-post {
+	background-color: #3b3b3b;
+}
+
+#current-post:hover {
+	background-color: #3b3b3b;
+}
